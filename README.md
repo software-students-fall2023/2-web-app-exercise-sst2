@@ -12,4 +12,4 @@ To see our user stories and issues, click [here](https://github.com/software-stu
 
 ## Task boards
 
-[Sprint 1 Taskboard](https://github.com/software-students-fall2023/2-web-app-exercise-sst2/projects?query=is%3Aopen)
+To see our taskboards, click [here](https://github.com/software-students-fall2023/2-web-app-exercise-sst2/projects?query=is%3Aopen)!
