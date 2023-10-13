@@ -17,6 +17,10 @@ postsCollection = db['posts']
 def home():
     return 'Hello, World!'  # Change this to render_template once we build the CSS HTML
 
+@app.route('/post')
+def postPage():
+    return render_template("postPage.html", title = "PINEAPPLE", postContent = "HELLO THIS IS THE CONNTENTNTENKWNKN")
+
 
 if __name__ == "__main__":
     app.run(debug=True)
