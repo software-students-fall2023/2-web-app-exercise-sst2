@@ -45,6 +45,9 @@ except Exception as e:
     print('Database connection error:', e)  # debug
 
 
+usersCollection = db['users']
+postsCollection = db['posts']
+
 @app.route('/')
 def home():
     return 'Hello, World!'  # Change this to render_template once we build the CSS HTML
