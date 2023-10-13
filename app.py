@@ -21,16 +21,6 @@ app = Flask(__name__)
 # for doc in documents:
 #     print(doc)
 
-# try:
-
-#     if db:
-#         print("Pineppla")
-#     else:
-#         print("HEEE")
-
-# except Exception:
-#     print("HERE")
-
 load_dotenv()  # take environment variables from .env.
 
 # turn on debugging if in development mode
