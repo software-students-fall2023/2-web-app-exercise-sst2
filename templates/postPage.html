@@ -12,16 +12,18 @@
   <body>
     <div class="post">
       <h1 class="post-title">{{ title }}</h1>
+      <h2 class="user">{{user}}</h2>
       <p class="post-content">{{postContent}}</p>
     </div>
 
     <div class="comments">
       <h2 class="comments-title">Comments</h2>
+      {% for comment in comments %}
       <div class="comment">
-        {% for comment in comments %}
-        <p class="comment-content">{{ comment }}</p>
-        {% endfor %}
+        <h2 class="user">{{ comment.user }}</h2>
+        <p class="comment">{{ comment.comment }}</p>
       </div>
+      {% endfor %}
     </div>
   </body>
 </html>
