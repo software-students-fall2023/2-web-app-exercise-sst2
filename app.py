@@ -15,7 +15,7 @@ postsCollection = db['posts']
 
 @app.route('/')
 def home():
-    return 'Hello, World!'  # Change this to render_template once we build the CSS HTML
+    return render_template('home.html') # Change this to render_template once we build the CSS HTML
 
 
 if __name__ == "__main__":
