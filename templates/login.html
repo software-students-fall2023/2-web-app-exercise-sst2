@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='auth.css') }}">
+</head>
+<body>
+    <main>
+        <section>
+            <form action="/login" method="post" class="authForm">
+                <h1 class="formHeader">Login</h1>
+                {% if request.args.get('signup') == 'success' %}
+                    <p class="signUpSuccess">Sign up successful! You can now login.</p>
+                {% endif %}
+                <!-- <label for="username">Username</label><br> -->
+                <input type="text" id="username" name="username" placeholder="Username"><br>
+                <!-- <label for="password">Password</label><br> -->
+                <input type="password" id="password" name="password" placeholder="Password"><br>
+                {% if error %}
+                    <p class="errorMessage">{{ error }}</p>
+                {% endif %}
+                <input type="submit" value="Login">
+            </form>
+        </section>
+    </main>
+</body>
+</html>
