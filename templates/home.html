@@ -1,17 +1,12 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Home</title>
-    <link
-      rel="stylesheet"
-      href="{{ url_for('static', filename='style.css') }}"
-    />
+    <title>Share Game Lore</title>
   </head>
   <body>
     {% include 'nav.html' %}
-    <main>
-      <h1>Welcome to the Home Page</h1>
-      <p>This is the home page content.</p>
-    </main>
+    <h1>Welcome to the website where you can share lore</h1>
+    <a href="{{ url_for('loginPage') }}">Log In</a>
+    <a href="{{ url_for('signUpPage') }}">Sign Up</a>
   </body>
 </html>
