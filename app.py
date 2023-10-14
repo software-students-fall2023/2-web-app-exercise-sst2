@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, make_response
+from flask import Flask, render_template, request, redirect, url_for, make_response, session
 
 import pymongo
 from bson.objectid import ObjectId
@@ -11,9 +11,6 @@ app = Flask(__name__)
 app.secret_key = 'your_secret_key_here'
 
 collection = db['users'] #how to create the collection variable
-
-usersCollection = db['users']
-postsCollection = db['posts']
 
 usersCollection = db['users']
 postsCollection = db['posts']
