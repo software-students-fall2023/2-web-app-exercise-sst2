@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, make_response, session
+from flask import Flask, render_template, request, redirect, url_for, make_response, session, flash
 
 import pymongo
 from bson.objectid import ObjectId
@@ -17,7 +17,8 @@ postsCollection = db['posts']
 
 @app.route('/')
 def home():
-    return render_template('home.html')  # Change this to render_template once we build the CSS HTML
+    isLoggedIn = 'username' in session
+    return render_template('home.html', isLoggedIn = isLoggedIn)  # Change this to render_template once we build the CSS HTML
 
 @app.route('/login', methods=['GET'])
 def loginPage():
@@ -30,6 +31,7 @@ def loginProcess():
     user = usersCollection.find_one({'username': username})
     if user and user['password'] == password:
         session['username'] = user['username']
+        session['userId'] = str(user['_id'])
         return redirect(url_for('home'))
     else:
         error = "Invalid password or username"
@@ -58,12 +60,18 @@ def signUpProcess():
     newUser = {"username":username, "password":password, "email":email}
     try:
         usersCollection.insert_one(newUser)
-        return redirect(url_for('loginPage', signup="success"))
+        flash("Sign up successful! You can now login.")
+        return redirect(url_for('loginPage'))
     except:
         error = "Something went wrong with creating your account. Please try again..."
         return render_template('signup.html', error = error)
 
-
+@app.route('/logOut')
+def logOut():
+    session.pop('username', None)
+    session.pop('userId', None)
+    flash("You have successfully logged out!")
+    return redirect(url_for('home'))
 
 if __name__ == "__main__":
     app.run(debug=True)

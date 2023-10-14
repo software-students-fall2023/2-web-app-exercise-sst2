@@ -10,9 +10,13 @@
         <section>
             <form action="/login" method="post" class="authForm">
                 <h1 class="formHeader">Login</h1>
-                {% if request.args.get('signup') == 'success' %}
-                    <p class="signUpSuccess">Sign up successful! You can now login.</p>
-                {% endif %}
+                {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                        {% for message in messages %}
+                            <p class="successMessage">{{ message }}</p>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
                 <!-- <label for="username">Username</label><br> -->
                 <input type="text" id="username" name="username" placeholder="Username"><br>
                 <!-- <label for="password">Password</label><br> -->
