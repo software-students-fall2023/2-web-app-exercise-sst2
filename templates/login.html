@@ -1,32 +1,42 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>Login</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='auth.css') }}">
-</head>
-<body>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/auth.css') }}"
+    />
+  </head>
+  <body>
     <main>
-        <section>
-            <form action="/login" method="post" class="authForm">
-                <h1 class="formHeader">Login</h1>
-                {% with messages = get_flashed_messages() %}
-                    {% if messages %}
-                        {% for message in messages %}
-                            <p class="successMessage">{{ message }}</p>
-                        {% endfor %}
-                    {% endif %}
-                {% endwith %}
-                <!-- <label for="username">Username</label><br> -->
-                <input type="text" id="username" name="username" placeholder="Username"><br>
-                <!-- <label for="password">Password</label><br> -->
-                <input type="password" id="password" name="password" placeholder="Password"><br>
-                {% if error %}
-                    <p class="errorMessage">{{ error }}</p>
-                {% endif %}
-                <input type="submit" value="Login">
-            </form>
-        </section>
+      <section>
+        <form action="/login" method="post" class="authForm">
+          <h1 class="formHeader">Login</h1>
+          {% with messages = get_flashed_messages() %} {% if messages %} {% for
+          message in messages %}
+          <p class="successMessage">{{ message }}</p>
+          {% endfor %} {% endif %} {% endwith %}
+          <!-- <label for="username">Username</label><br> -->
+          <input
+            type="text"
+            id="username"
+            name="username"
+            placeholder="Username"
+          /><br />
+          <!-- <label for="password">Password</label><br> -->
+          <input
+            type="password"
+            id="password"
+            name="password"
+            placeholder="Password"
+          /><br />
+          {% if error %}
+          <p class="errorMessage">{{ error }}</p>
+          {% endif %}
+          <input type="submit" value="Login" />
+        </form>
+      </section>
     </main>
-</body>
+  </body>
 </html>
