@@ -92,7 +92,7 @@ header {
 
 .post-sep {
     width: 500px;
-    margin: 10px;
+    margin: 7px;
     box-sizing: border-box;
     padding: 0 100px;
     border: none;
@@ -102,7 +102,7 @@ header {
 .post-item {
     text-decoration: none;
     width: 500px;
-    padding: 20px 25px;
+    padding: 25px 25px;
     background-color: white;
     border-radius: 12px;
 }

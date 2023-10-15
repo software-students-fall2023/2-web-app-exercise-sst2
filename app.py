@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for, make_respo
 
 import pymongo
 from bson.objectid import ObjectId
+from bson.json_util import dumps
 from pymongo import MongoClient
 
 from db import db # we import from the db file now
@@ -73,9 +74,14 @@ def logOut():
     flash("You have successfully logged out!")
     return redirect(url_for('home'))
 
-@app.route('/feed')
+@app.route('/feed', methods=['GET'])
 def feed():
     return render_template('feed.html')
+
+FEED_NUM_POSTS = 20
+@app.route('/feed-posts', methods=['GET'])
+def getFeedPosts():
+    return dumps(list(postsCollection.find({}).limit(FEED_NUM_POSTS)))
 
 if __name__ == "__main__":
     app.run(debug=True)
