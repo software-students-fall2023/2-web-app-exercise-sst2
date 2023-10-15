@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='post.css') }}"
+    />
+    <title>Post with Comments</title>
+  </head>
+  <body>
+    <div class="post">
+      <h1 class="post-title">{{ title }}</h1>
+      <h2 class="user">{{user}}</h2>
+      <p class="post-content">{{postContent}}</p>
+    </div>
+
+    <div class="comments">
+      <h2 class="comments-title">Comments</h2>
+      {% for comment in comments %}
+      <div class="comment">
+        <h2 class="user">{{ comment.user }}</h2>
+        <p class="comment">{{ comment.comment }}</p>
+      </div>
+      {% endfor %}
+    </div>
+  </body>
+</html>
