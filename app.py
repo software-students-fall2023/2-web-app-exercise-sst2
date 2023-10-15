@@ -73,5 +73,9 @@ def logOut():
     flash("You have successfully logged out!")
     return redirect(url_for('home'))
 
+@app.route('/feed')
+def feed():
+    return render_template('feed.html')
+
 if __name__ == "__main__":
     app.run(debug=True)
