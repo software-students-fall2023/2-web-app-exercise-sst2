@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html>
-<head>
+  <head>
     <title>Share Game Lore</title>
-</head>
-<body>
+  </head>
+  <body>
+    {% include 'nav.html' %}
     <h1>Welcome to the website where you can share lore</h1>
     {% with messages = get_flashed_messages() %}
         {% if messages %}
