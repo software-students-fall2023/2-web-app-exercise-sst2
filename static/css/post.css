@@ -49,3 +49,10 @@ body {
     color: #444;
     margin: 0;
 }
+.profile-link {
+    text-decoration: none;
+    color: inherit; 
+}
+.profile-link:hover{
+    color: blue; 
+}

@@ -17,7 +17,9 @@ postsCollection = db['posts']
 @app.route('/')
 def home():
     isLoggedIn = 'username' in session
-    return render_template('home.html', isLoggedIn = isLoggedIn)  # Change this to render_template once we build the CSS HTML
+    if isLoggedIn is False:
+        return render_template('login.html')
+    return render_template('feed.html')  # Change this to render_template once we build the CSS HTML
 
 @app.route('/login', methods=['GET'])
 def loginPage():
@@ -72,21 +74,21 @@ def logOut():
     flash("You have successfully logged out!")
     return redirect(url_for('home'))
 
-@app.route('/feed', methods=['GET'])
-def feed():
-    return render_template('feed.html')
+# @app.route('/feed', methods=['GET'])
+# def feed():
+#     return render_template('feed.html')
 
 FEED_NUM_POSTS = 20
 @app.route('/feed-posts', methods=['GET'])
 def getFeedPosts():
     return dumps(list(postsCollection.find({}).limit(FEED_NUM_POSTS)))
 
-@app.route('/post')
-def postPage():
-    title = postsCollection.find_one({"_id":ObjectId('6529dee0699948aacd3a1e4c')})['title']
-    content = postsCollection.find_one({"_id":ObjectId('6529dee0699948aacd3a1e4c')})['content']
-    data = postsCollection.find_one({"_id":ObjectId('6529dee0699948aacd3a1e4c')})['comments']
-    user = postsCollection.find_one({"_id":ObjectId('6529dee0699948aacd3a1e4c')})['user']
+@app.route('/post/<post_id>')
+def postPage(post_id):
+    title = postsCollection.find_one({"_id":ObjectId(post_id)})['title']
+    content = postsCollection.find_one({"_id":ObjectId(post_id)})['content']
+    data = postsCollection.find_one({"_id":ObjectId(post_id)})['comments']
+    user = postsCollection.find_one({"_id":ObjectId(post_id)})['user']
     return render_template("postPage.html", title = title, postContent = content, comments = data, user = user)
 
 if __name__ == "__main__":

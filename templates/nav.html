@@ -3,18 +3,21 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Your Website</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='nav.css') }}" />
+    <title>Lore Feed</title>
+    <script src="{{ url_for('static', filename='js/feed.js') }}" async></script>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/nav.css') }}"
+    />
   </head>
   <body>
     <header>
-      <nav>
-        <ul>
-          <li><a href="/">Home</a></li>
-          <li><a href="/search">Search</a></li>
-          <li><a href="/profile">Profile</a></li>
-        </ul>
-      </nav>
+      <a id="logo-btn" href="/">
+        <span id="logo-text">Lore App 🤷🏻‍♂️</span>
+      </a>
+      <div id="header-profile">
+        <span id="profile-username">TestUser123</span>
+      </div>
     </header>
   </body>
 </html>
