@@ -1,0 +1,66 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    font-family: "Helvetica", sans-serif;
+    background-color: #98b3fd;
+}
+
+.authForm {
+    width: 300px;
+    background-color: #00A5E3;
+    padding: 30px;
+    border-radius: 20px;
+    margin: 10px auto;
+}
+
+.authForm input[type="text"], input[type="password"]{
+    box-sizing: border-box;
+    width:100%;
+    padding: 10px;
+    margin: 10px auto;
+    background-color: white;
+    border: 2px solid #77d1b5;
+    border-radius: 20px;
+    font-size: 14px;
+}
+
+.authForm input[type="submit"]{
+    margin-top: 20px auto;
+    width: 100%;
+    padding: 10px;
+    border: 1px;
+    border-radius: 30px;
+    background-color: #8DD7BF;
+    color: #444444;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.formHeader{
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: #444444;
+}
+
+.errorMessage{
+    text-align: center;
+    margin: 10px;
+    color: red;
+    font-size: 17px;
+}
+
+.successMessage{
+    text-align: center;
+    margin: 10px;
+    color: #444444;
+    font-size: 17px;
+}
+
+.authForm input[type="submit"]:hover{
+    background-color:#4DD091;
+}
