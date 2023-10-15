@@ -1,9 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <title>Lore Feed</title>
     <script src="{{ url_for('static', filename='js/feed.js') }}" async></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/feed.css') }}">
 </head>
 <body>
+    <header>
+        <a id="logo-btn" href="/">
+            <span id="logo-text">Lore App 🤷🏻‍♂️</span>
+        </a>
+        <div id="dummy-search">dummy search bar</div>
+        <div id="header-profile">
+            <span id="profile-username">TestUser123</span>
+        </div>
+    </header>
     <p>test</p>
 </body>
 </html>
