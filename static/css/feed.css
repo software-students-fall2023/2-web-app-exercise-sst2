@@ -90,9 +90,73 @@ header {
     align-items: center;
 }
 
-.post-div {
-    height: 500px;
+.post-sep {
     width: 500px;
-    margin-bottom: 20px;
-    background-color: gray;
+    margin: 10px;
+    box-sizing: border-box;
+    padding: 0 100px;
+    border: none;
+    border-bottom: 1px solid lightgray;
+}
+
+.post-item {
+    text-decoration: none;
+    width: 500px;
+    padding: 20px 25px;
+    background-color: white;
+    border-radius: 12px;
+}
+
+.post-item:hover {
+    background-color: rgb(245, 245, 245);
+}
+
+.post-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.post-title {
+    margin: 0;
+    font-size: 23px;
+    font-weight: bold;
+    color: black;
+}
+
+.post-author {
+    text-decoration: none;
+    font-size: 14px;
+    color: darkgray;
+}
+
+.post-author-name {
+    color: gray;
+}
+
+.post-author:hover {
+    text-decoration: underline;
+    color: rgb(70, 150, 190);
+}
+
+.post-author:hover .post-author-name {
+    color: inherit;
+}
+
+.post-content {
+    font-size: 16px;
+    color: rgb(75, 75, 75);
+    margin: 17px 0 10px 0;
+}
+
+.post-bottom {
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    gap: 10px;
+}
+
+.post-comment-count {
+    font-size: 16px;
+    color: gray;
 }
