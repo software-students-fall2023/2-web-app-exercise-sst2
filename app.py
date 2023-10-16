@@ -19,7 +19,7 @@ def home():
     isLoggedIn = 'username' in session
     if isLoggedIn is False:
         return render_template('login.html')
-    return render_template('feed.html')  # Change this to render_template once we build the CSS HTML
+    return render_template('feed.html', usernam=session['username'])  # Change this to render_template once we build the CSS HTML
 
 @app.route('/login', methods=['GET'])
 def loginPage():
@@ -38,11 +38,11 @@ def loginProcess():
         error = "Invalid password or username"
         return render_template('login.html',error=error)
     
-@app.route('/signUp', methods=['GET'])
+@app.route('/signup', methods=['GET'])
 def signUpPage():
     return render_template('signup.html')
 
-@app.route('/signUp',methods=['POST'])
+@app.route('/signup',methods=['POST'])
 def signUpProcess():
     email = request.form.get('email')
     username = request.form.get('username')
@@ -67,7 +67,7 @@ def signUpProcess():
         error = "Something went wrong with creating your account. Please try again..."
         return render_template('signup.html', error = error)
 
-@app.route('/logOut')
+@app.route('/logout')
 def logOut():
     session.pop('username', None)
     session.pop('userId', None)

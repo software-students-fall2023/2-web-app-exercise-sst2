@@ -50,9 +50,11 @@ header {
 }
 
 #header-profile {
+    position: relative;
     display: flex;
     justify-content: right;
     align-items: center;
+    padding: 5px 10px;
 }
 
 #profile-username {
@@ -159,4 +161,32 @@ header {
 .post-comment-count {
     font-size: 16px;
     color: gray;
+}
+
+.dropdown-menu{
+    display: none;
+    position: absolute;
+    right: auto;
+    top: 100%;
+    background-color: white;
+    border: 2px solid grey;
+    border-radius: 1000px;
+    z-index: 10;
+}
+
+.dropdown-menu a{
+    display: block;
+    padding: 10px;
+    text-decoration: none;
+    color: black;
+    border-radius: 1000px;
+}
+
+.dropdown-menu a:hover{
+    background-color: #4DD091;
+    border-radius: 1000px;
+}
+
+#header-profile:hover .dropdown-menu{
+    display:block;
 }
