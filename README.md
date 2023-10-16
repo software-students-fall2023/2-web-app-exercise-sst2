@@ -4,12 +4,12 @@ A little exercise to build a web application following an agile development proc
 
 ## Product vision statement
 
-See instructions. Delete this line and place the Product Vision Statement here.
+A tag-based web forum designed to foster ideas on game-related lore and artwork, encouraging conversation and feedback to inspire gaming users in creating their own designs.
 
 ## User stories
 
-See instructions. Delete this line and place a link to the user stories here.
+To see our user stories and issues, click [here](https://github.com/software-students-fall2023/2-web-app-exercise-sst2/issues)!
 
 ## Task boards
 
-See instructions. Delete this line and place a link to the task boards here.
+To see our taskboards, click [here](https://github.com/software-students-fall2023/2-web-app-exercise-sst2/projects?query=is%3Aopen)!

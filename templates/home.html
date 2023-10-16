@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Share Game Lore</title>
+  </head>
+  <body>
+    {% include 'nav.html' %}
+    <h1>Welcome to the website where you can share lore</h1>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+                <p class="successMessage">{{ message }}</p>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    <a href="{{ url_for('loginPage') }}">Log In</a>
+    <a href="{{ url_for('signUpPage') }}">Sign Up</a>
+    {% if isLoggedIn %}
+        <a href="{{ url_for('logOut') }}" class="button">Log Out<a></a>
+    {% endif %}
+
+</body>
+</html>
