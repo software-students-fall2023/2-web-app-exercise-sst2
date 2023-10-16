@@ -64,3 +64,8 @@ body{
 .authForm input[type="submit"]:hover{
     background-color:#4DD091;
 }
+
+.centerLink{
+    text-align: center;
+    margin-top: 20px;
+}
