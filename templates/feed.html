@@ -15,7 +15,7 @@
       </a>
       <div id="dummy-search">dummy search bar</div>
       <div id="header-profile">
-        <span id="profile-username">{{ session['username'] }}</span>
+        <span id="profile-username">{{ username }}</span>
         <div class="dropdown-menu">
           <a href="{{ url_for('logOut') }}">Log out</a>
         </div>
