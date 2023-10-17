@@ -50,9 +50,11 @@ header {
 }
 
 #header-profile {
+    position: relative;
     display: flex;
     justify-content: right;
     align-items: center;
+    padding: 5px 10px;
 }
 
 #profile-username {
@@ -163,4 +165,39 @@ header {
 #header-profile{
     text-decoration: none;
     color: inherit;
+}
+
+.dropdown-menu{
+    display: none;
+    position: absolute;
+    right: auto;
+    top: 100%;
+    background-color: white;
+    border: 2px solid grey;
+    border-radius: 15px;
+    z-index: 10;
+}
+
+.dropdown-menu a{
+    display: block;
+    padding: 10px;
+    text-decoration: none;
+    color: black;
+    border-radius: 12px;
+}
+
+.dropdown-menu a:hover{
+    background-color: #4DD091;
+    border-radius: 12px;
+}
+
+#header-profile:hover .dropdown-menu{
+    display:block;
+}
+
+.dropdown-menu a:first-child {
+    border-top: none;
+}
+.dropdown-menu a:not(:first-child) {
+    margin-top: 1px;
 }

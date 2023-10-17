@@ -23,6 +23,10 @@ body {
     color: #555;
 }
 
+.user{
+    font-size: 13px;
+}
+
 .comments {
     background-color: #fff;
     padding: 20px;

@@ -64,3 +64,22 @@ body{
 .authForm input[type="submit"]:hover{
     background-color:#4DD091;
 }
+
+.centerLink{
+    text-align: center;
+    margin-top: 20px;
+}
+
+section{
+    text-align: center;
+}
+
+.backButton{
+    background-color: #8DD7BF;
+    border-radius: 30px;
+    color: #444444;
+    padding: 10px;
+    display: inline-block;
+    margin-top: 10px;
+    font-size: 14px;
+}
