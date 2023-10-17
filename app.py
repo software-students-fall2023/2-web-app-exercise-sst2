@@ -48,6 +48,7 @@ def signUpProcess():
     username = request.form.get('username')
     password = request.form.get('password')
     confirmPassword = request.form.get('confirmPassword')
+    userRole = "user"
 
     if password != confirmPassword:
         error = "Passwords do not match"
@@ -58,7 +59,7 @@ def signUpProcess():
     if user:
         error = "This username already exists"
         return render_template('signup.html', error = error)
-    newUser = {"username":username, "password":password, "email":email}
+    newUser = {"username":username, "password":password, "email":email, "role":userRole}
     try:
         usersCollection.insert_one(newUser)
         flash("Sign up successful! You can now login.")
@@ -89,7 +90,7 @@ def postPage(post_id):
     content = postsCollection.find_one({"_id":ObjectId(post_id)})['content']
     data = postsCollection.find_one({"_id":ObjectId(post_id)})['comments']
     user = postsCollection.find_one({"_id":ObjectId(post_id)})['user']
-    return render_template("postPage.html", title = title, postContent = content, comments = data, user = user)
+    return render_template("postPage.html", title = title, postContent = content, comments = data, user = user, currentUser = session['username'])
 
 if __name__ == "__main__":
     app.run(debug=True)
