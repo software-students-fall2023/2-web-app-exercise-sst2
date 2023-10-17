@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, make_response, session, flash
+from flask import Flask, render_template, request, redirect, url_for, make_response, session, flash, Response
 
 import pymongo
 from bson.objectid import ObjectId
@@ -83,6 +83,32 @@ FEED_NUM_POSTS = 20
 @app.route('/feed-posts', methods=['GET'])
 def getFeedPosts():
     return dumps(list(postsCollection.find({}).limit(FEED_NUM_POSTS)))
+
+@app.route('/vote_post/<post_id>/<good>', methods=['POST'])
+def votePost(post_id, good):
+    post = postsCollection.find_one({"_id":ObjectId(post_id)})
+    if post is None:
+        return Response('This post may have been deleted.', 404)
+    if 'username' not in session:
+        return Response('You must be logged in to vote.', 401)
+    if 'votes' not in post:
+        post['votes'] = []
+    vote = int(good)  # -1, 0, 1
+    old_vote = 0
+    old_vote_ind = -1
+    for i, v in enumerate(post['votes']):
+        if v['userId'] == session['userId']:
+            old_vote = v['vote']
+            old_vote_ind = i
+            break
+    score_change = vote - old_vote
+    post['score'] = post.get('score', 0) + score_change
+    if old_vote_ind >= 0:
+        post['votes'][old_vote_ind]['vote'] = vote
+    else:
+        post['votes'].append({'userId': session['userId'], 'vote': vote})
+    postsCollection.replace_one({"_id":ObjectId(post_id)}, post)
+    return Response('ok', 200)
 
 @app.route('/post/<post_id>')
 def postPage(post_id):
