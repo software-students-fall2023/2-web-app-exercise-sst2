@@ -8,6 +8,11 @@ const fetchPosts = async () => {
     return postList
 }
 
+// vote on post
+const votePost = async (postEle, good) => {
+    console.log(postEle);
+}
+
 // helper function to build document
 // children = [{n: node, c: [node]}]
 const buildDocument = (parent, children) => {
@@ -22,12 +27,13 @@ const buildDocument = (parent, children) => {
 // helper function to create element with class name
 const eleWithClass = (tag, classname) => {
     const ele = document.createElement(tag)
-    ele.classList.add(classname)
+    ele.className = classname
     return ele
 }
 
 // Post component
 const Post = ({_id, title, content, comments, user}) => {
+    const postContainer = eleWithClass('div', 'post-container')
     const postItem = eleWithClass('a', 'post-item')
     postItem.href = `/post/${_id.$oid}`
 
@@ -48,23 +54,48 @@ const Post = ({_id, title, content, comments, user}) => {
     // post bottom (comments, rating?)
     const postBottom = eleWithClass('div', 'post-bottom')
     const commentCount = eleWithClass('span', 'post-comment-count')
-    commentCount.textContent = `${comments.length} comment${comments.length === 1 ? '' : 's'}`
+    const numComments = comments?.length ?? 0
+    commentCount.textContent = `${numComments} comment${numComments === 1 ? '' : 's'}`
+    const postVoting = eleWithClass('div', 'post-voting')
+    const postRating = eleWithClass('span', 'post-rating')
+    postRating.textContent = 12
+    const voteGood = eleWithClass('button', 'post-vote-btn vote-good')
+    const voteBad = eleWithClass('button', 'post-vote-btn vote-bad')
+    const voteGoodIcon = eleWithClass('span', 'vote-btn-icon')
+    const voteBadIcon = eleWithClass('span', 'vote-btn-icon')
+    voteGoodIcon.textContent = '👍'
+    voteBadIcon.textContent = '👎'
+    voteGood.addEventListener('click', (e) => { e.preventDefault(); votePost(postItem, true) })
+    voteBad.addEventListener('click', (e) => { e.preventDefault(); votePost(postItem, false) })
+
 
     // build and append
     const postDoc = document.createDocumentFragment()
     buildDocument(postDoc, [
-        { n: postItem, c: [
-            { n: postTop, c: [
-                { n: postTitle },
-                { n: postAuthor, c: [
-                    { n: authorName }
-                ]}
+        { n: postContainer, c: [
+            { n: postItem, c: [
+                { n: postTop, c: [
+                    { n: postTitle },
+                    { n: postAuthor, c: [
+                        { n: authorName },
+                    ]},
+                ]},
+                { n: postContent },
+                { n: eleWithClass('div', 'post-bottom-placeholder')}
             ]},
-            { n: postContent },
             { n: postBottom, c: [
-                { n: commentCount }
+                { n: commentCount },
+                { n: postVoting, c: [
+                    { n: voteGood, c: [
+                        {n: voteGoodIcon },
+                    ]},
+                    { n: postRating },
+                    { n: voteBad, c: [
+                        {n: voteBadIcon },
+                    ]},
+                ]},
             ]},
-        ]}
+        ]},
     ])
 
     return postDoc
