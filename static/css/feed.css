@@ -160,3 +160,7 @@ header {
     font-size: 16px;
     color: gray;
 }
+#header-profile{
+    text-decoration: none;
+    color: inherit;
+}

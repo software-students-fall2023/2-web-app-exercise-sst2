@@ -91,5 +91,13 @@ def postPage(post_id):
     user = postsCollection.find_one({"_id":ObjectId(post_id)})['user']
     return render_template("postPage.html", title = title, postContent = content, comments = data, user = user)
 
+# @app.route('/profile/<profile_id>')
+# def profilePage(profile_id):
+#     print(profile_id)
+#     if profile_id is None:
+#         return "HERE"
+#     else:
+#         return "XXDDD"
+
 if __name__ == "__main__":
     app.run(debug=True)
