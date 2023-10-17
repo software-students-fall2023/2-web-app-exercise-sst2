@@ -1,0 +1,40 @@
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-family: Arial, sans-serif;
+    color:#444444;
+    background-image: url('../images/homeBackground.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
+.homeContent{
+    text-align: center;
+}
+
+.buttonContainer{
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+}
+
+.button{
+    width: 150px;
+    height: 40px;
+    border: 2px solid #4DD091;
+    background-color: #8DD7BF;
+    border-radius: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.button:hover{
+    background-color: #50dbdb;
+    transition: background-color 0.3s ease;
+}
+
