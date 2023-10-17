@@ -8,52 +8,66 @@ const fetchPosts = async () => {
     return postList
 }
 
+// helper function to build document
+// children = [{n: node, c: [node]}]
+const buildDocument = (parent, children) => {
+    if (children !== undefined) {
+        for (const {n, c} of children) {
+            parent.appendChild(n)
+            buildDocument(n, c)
+        }
+    }
+}
+
+// helper function to create element with class name
+const eleWithClass = (tag, classname) => {
+    const ele = document.createElement(tag)
+    ele.classList.add(classname)
+    return ele
+}
+
 // Post component
 const Post = ({_id, title, content, comments, user}) => {
-    const postItem = document.createElement('a')
+    const postItem = eleWithClass('a', 'post-item')
     postItem.href = `/post/${_id.$oid}`
-    postItem.classList.add('post-item')
 
     // top of post (title, author)
-    const postTop = document.createElement('div')
-    postTop.classList.add('post-top')
-
-    const postTitle = document.createElement('h2')
-    postTitle.classList.add('post-title')
+    const postTop = eleWithClass('div', 'post-top')
+    const postTitle = eleWithClass('h2', 'post-title')
     postTitle.textContent = title
-
-    const postAuthor = document.createElement('a')
-    postAuthor.classList.add('post-author')
+    const postAuthor = eleWithClass('a', 'post-author')
     postAuthor.href = `/profile/${user}`
     postAuthor.textContent = 'by '
-
-    const authorName = document.createElement('span')
-    authorName.classList.add('post-author-name')
+    const authorName = eleWithClass('span', 'post-author-name')
     authorName.textContent = user
-    
-    postAuthor.appendChild(authorName)
-    postTop.appendChild(postTitle)
-    postTop.appendChild(postAuthor)
-    postItem.appendChild(postTop)
 
     // post content
-    const postContent = document.createElement('p')
-    postContent.classList.add('post-content')
+    const postContent = eleWithClass('p', 'post-content')
     postContent.textContent = content
-    postItem.appendChild(postContent)
 
     // post bottom (comments, rating?)
-    const postBottom = document.createElement('div')
-    postBottom.classList.add('post-bottom')
-
-    const commentCount = document.createElement('span')
-    commentCount.classList.add('post-comment-count')
+    const postBottom = eleWithClass('div', 'post-bottom')
+    const commentCount = eleWithClass('span', 'post-comment-count')
     commentCount.textContent = `${comments.length} comment${comments.length === 1 ? '' : 's'}`
 
-    postBottom.appendChild(commentCount)
-    postItem.appendChild(postBottom)
+    // build and append
+    const postDoc = document.createDocumentFragment()
+    buildDocument(postDoc, [
+        { n: postItem, c: [
+            { n: postTop, c: [
+                { n: postTitle },
+                { n: postAuthor, c: [
+                    { n: authorName }
+                ]}
+            ]},
+            { n: postContent },
+            { n: postBottom, c: [
+                { n: commentCount }
+            ]},
+        ]}
+    ])
 
-    return postItem
+    return postDoc
 }
 
 // post separator (<hr>)
@@ -65,13 +79,16 @@ const PostSep = () => {
 
 // init post list
 const postsInit = async () => {
-    const postListDiv = document.getElementById('posts-list-div')
+    const postListDoc = document.createDocumentFragment()
     
     const postList = await fetchPosts()
     for (const post of postList) {
-        postListDiv.appendChild(Post(post))
-        postListDiv.appendChild(PostSep())
+        postListDoc.appendChild(Post(post))
+        postListDoc.appendChild(PostSep())
     }
+
+    const postListDiv = document.getElementById('posts-list-div')
+    postListDiv.appendChild(postListDoc)
 }
 
 // init when ready
