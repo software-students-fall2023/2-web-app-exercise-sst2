@@ -170,7 +170,7 @@ header {
     top: 100%;
     background-color: white;
     border: 2px solid grey;
-    border-radius: 1000px;
+    border-radius: 15px;
     z-index: 10;
 }
 
@@ -179,14 +179,21 @@ header {
     padding: 10px;
     text-decoration: none;
     color: black;
-    border-radius: 1000px;
+    border-radius: 12px;
 }
 
 .dropdown-menu a:hover{
     background-color: #4DD091;
-    border-radius: 1000px;
+    border-radius: 12px;
 }
 
 #header-profile:hover .dropdown-menu{
     display:block;
+}
+
+.dropdown-menu a:first-child {
+    border-top: none;
+}
+.dropdown-menu a:not(:first-child) {
+    margin-top: 1px;
 }

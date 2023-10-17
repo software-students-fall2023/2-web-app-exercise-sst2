@@ -10,7 +10,9 @@
     <title>Post with Comments</title>
   </head>
   <body>
-    {% include 'nav.html' %}
+    {% with currentUser=currentUser %}
+      {% include 'nav.html' %}
+    {% endwith %}
     <div class="post">
       <h1 class="post-title">{{ title }}</h1>
       <h2 class="user">{{user}}</h2>
