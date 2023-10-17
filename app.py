@@ -18,7 +18,7 @@ postsCollection = db['posts']
 def home():
     isLoggedIn = 'username' in session
     if isLoggedIn is False:
-        return render_template('login.html')
+        return render_template('home.html')
     return render_template('feed.html', username=session['username'])  # Change this to render_template once we build the CSS HTML
 
 @app.route('/login', methods=['GET'])
