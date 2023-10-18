@@ -1,5 +1,24 @@
-<form action="/create" method="post">
-  <input type="text" name="user_input" placeholder="Type something..." />
-  <input type="title" name="title" />
-  <button type="submit">Submit</button>
-</form>
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Game Lore Website</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/createPost.css') }}" />
+  </head>
+  <body>
+    {% include 'nav.html' %}
+    <form action="/create" method="post">
+      {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert">{{ message }}</div>
+            {% endfor %}
+          {% endif %}
+      {% endwith %}
+      <input type="title" name="title" placeholder="Title of Post" />
+      <textarea type="text" name="postContent" placeholder="Type something..." ></textarea>
+      <button type="submit">Submit</button>
+    </form>
+  </body>
+</html>
+
+
