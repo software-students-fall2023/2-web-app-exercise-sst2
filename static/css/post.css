@@ -60,3 +60,10 @@ body {
 .profile-link:hover{
     color: blue; 
 }
+a{
+    text-decoration: none;
+    color: inherit; 
+}
+a:hover{
+    color: blue; 
+}
