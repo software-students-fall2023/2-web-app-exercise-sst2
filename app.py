@@ -92,6 +92,7 @@ def getFeedPosts():
         if 'votes' in post:
             del post['votes']
         post['vote'] = vote
+    feed_posts.sort(key=lambda p: p['_id'].generation_time, reverse=True)
     return dumps(feed_posts)
 
 @app.route('/vote_post/<post_id>/<vote>', methods=['POST'])
