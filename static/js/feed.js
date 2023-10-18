@@ -4,58 +4,145 @@ const fetchPosts = async () => {
     method: "GET",
   });
   const postList = await res.json();
-
   return postList;
 };
 
+// vote on post
+const votePost = async (postEle, good) => {
+  oldvote = postEle.getAttribute("p-vote");
+  let vote = 0;
+  if (good && oldvote !== "1") vote = "1";
+  if (!good && oldvote !== "-1") vote = "-1";
+
+  const res = await fetch(
+    `/vote_post/${postEle.getAttribute("p-id")}/${vote}`,
+    {
+      method: "POST",
+    }
+  );
+  const updated = await res.json();
+  postEle.replaceWith(Post(updated));
+};
+
+const setPostVote = (postEle, vote) => {
+  if (vote === 1)
+    postEle.querySelector(".vote-good").classList.add("vote-cast");
+  else if (vote === -1)
+    postEle.querySelector(".vote-bad").classList.add("vote-cast");
+
+  if (vote === 0 || vote === 1)
+    postEle.querySelector(".vote-bad").classList.remove("vote-cast");
+  if (vote === 0 || vote === -1)
+    postEle.querySelector(".vote-good").classList.remove("vote-cast");
+
+  const scoreEle = postEle.querySelector(".post-score");
+  if (vote === -1) scoreEle.style = "color: red;";
+  else if (vote === 1) scoreEle.style = "color: limegreen;";
+  else scoreEle.style = null;
+};
+
+// helper function to build document
+// children = [{n: node, c: [node]}]
+const buildDocument = (parent, children) => {
+  if (children !== undefined) {
+    for (const { n, c } of children) {
+      parent.appendChild(n);
+      buildDocument(n, c);
+    }
+  }
+};
+
+// helper function to create element with class name
+const eleWithClass = (tag, classname) => {
+  const ele = document.createElement(tag);
+  ele.className = classname;
+  return ele;
+};
+
 // Post component
-const Post = ({ _id, title, content, comments, user }) => {
-  const postItem = document.createElement("a");
+const Post = ({ _id, title, content, comments, user, score, vote }) => {
+  const postContainer = eleWithClass("div", "post-container");
+  postContainer.setAttribute("p-id", _id.$oid);
+  postContainer.setAttribute("p-vote", vote);
+  const postItem = eleWithClass("a", "post-item");
   postItem.href = `/post/${_id.$oid}`;
-  postItem.classList.add("post-item");
 
   // top of post (title, author)
-  const postTop = document.createElement("div");
-  postTop.classList.add("post-top");
-
-  const postTitle = document.createElement("h2");
-  postTitle.classList.add("post-title");
+  const postTop = eleWithClass("div", "post-top");
+  const postTitle = eleWithClass("h2", "post-title");
   postTitle.textContent = title;
-
-  const postAuthor = document.createElement("a");
-  postAuthor.classList.add("post-author");
+  const postAuthor = eleWithClass("a", "post-author");
   postAuthor.href = `/profile/${user}/comments`;
   postAuthor.textContent = "by ";
-
-  const authorName = document.createElement("span");
-  authorName.classList.add("post-author-name");
+  const authorName = eleWithClass("span", "post-author-name");
   authorName.textContent = user;
 
-  postAuthor.appendChild(authorName);
-  postTop.appendChild(postTitle);
-  postTop.appendChild(postAuthor);
-  postItem.appendChild(postTop);
-
   // post content
-  const postContent = document.createElement("p");
-  postContent.classList.add("post-content");
+  const postContent = eleWithClass("p", "post-content");
   postContent.textContent = content;
-  postItem.appendChild(postContent);
 
   // post bottom (comments, rating?)
-  const postBottom = document.createElement("div");
-  postBottom.classList.add("post-bottom");
-
-  const commentCount = document.createElement("span");
-  commentCount.classList.add("post-comment-count");
-  commentCount.textContent = `${comments.length} comment${
-    comments.length === 1 ? "" : "s"
+  const postBottom = eleWithClass("div", "post-bottom");
+  const commentCount = eleWithClass("span", "post-comment-count");
+  const numComments = comments?.length ?? 0;
+  commentCount.textContent = `${numComments} comment${
+    numComments === 1 ? "" : "s"
   }`;
+  const postVoting = eleWithClass("div", "post-voting");
+  const postRating = eleWithClass("span", "post-score");
+  postRating.textContent = score ?? 0;
+  const voteGood = eleWithClass("button", "post-vote-btn vote-good");
+  const voteBad = eleWithClass("button", "post-vote-btn vote-bad");
+  const voteGoodIcon = eleWithClass("span", "vote-btn-icon");
+  const voteBadIcon = eleWithClass("span", "vote-btn-icon");
+  voteGoodIcon.textContent = "👍";
+  voteBadIcon.textContent = "👎";
+  voteGood.addEventListener("click", (e) => {
+    e.preventDefault();
+    votePost(postContainer, true);
+  });
+  voteBad.addEventListener("click", (e) => {
+    e.preventDefault();
+    votePost(postContainer, false);
+  });
 
-  postBottom.appendChild(commentCount);
-  postItem.appendChild(postBottom);
+  // build and append
+  const postDoc = document.createDocumentFragment();
+  buildDocument(postDoc, [
+    {
+      n: postContainer,
+      c: [
+        {
+          n: postItem,
+          c: [
+            {
+              n: postTop,
+              c: [{ n: postTitle }, { n: postAuthor, c: [{ n: authorName }] }],
+            },
+            { n: postContent },
+            { n: eleWithClass("div", "post-bottom-placeholder") },
+          ],
+        },
+        {
+          n: postBottom,
+          c: [
+            { n: commentCount },
+            {
+              n: postVoting,
+              c: [
+                { n: voteGood, c: [{ n: voteGoodIcon }] },
+                { n: postRating },
+                { n: voteBad, c: [{ n: voteBadIcon }] },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+  ]);
 
-  return postItem;
+  setPostVote(postContainer, vote);
+  return postDoc;
 };
 
 // post separator (<hr>)
@@ -67,13 +154,16 @@ const PostSep = () => {
 
 // init post list
 const postsInit = async () => {
-  const postListDiv = document.getElementById("posts-list-div");
+  const postListDoc = document.createDocumentFragment();
 
   const postList = await fetchPosts();
   for (const post of postList) {
-    postListDiv.appendChild(Post(post));
-    postListDiv.appendChild(PostSep());
+    postListDoc.appendChild(Post(post));
+    postListDoc.appendChild(PostSep());
   }
+
+  const postListDiv = document.getElementById("posts-list-div");
+  postListDiv.appendChild(postListDoc);
 };
 
 // init when ready

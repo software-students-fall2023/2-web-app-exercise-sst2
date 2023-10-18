@@ -8,7 +8,7 @@ body {
 header {
     position: sticky;
     top: 0;
-    /* z-index: 1000; */
+    z-index: 1000;
     padding: 5px 50px;
     display: flex;
     justify-content: space-between;
@@ -101,16 +101,21 @@ header {
     border-bottom: 1px solid lightgray;
 }
 
-.post-item {
-    text-decoration: none;
-    width: 500px;
-    padding: 25px 25px;
+.post-container {
+    position: relative;
     background-color: white;
     border-radius: 12px;
 }
 
-.post-item:hover {
+.post-container:hover {
     background-color: rgb(245, 245, 245);
+}
+
+.post-item {
+    text-decoration: none;
+    display: block;
+    width: 500px;
+    padding: 25px;
 }
 
 .post-top {
@@ -152,19 +157,74 @@ header {
 }
 
 .post-bottom {
+    cursor: default;
+    position: absolute;
+    right: 25px;
+    bottom: 25px;
     display: flex;
     justify-content: right;
     align-items: center;
-    gap: 10px;
+    gap: 20px;
+    height: 30px;
+}
+
+.post-bottom-placeholder {
+    height: 30px;
 }
 
 .post-comment-count {
     font-size: 16px;
+    color: rgb(157, 157, 157);
+}
+
+.post-voting {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.post-score {
     color: gray;
 }
 #header-profile{
     text-decoration: none;
     color: inherit;
+}
+
+.vote-btn-icon {
+    filter: saturate(0) brightness(.88);
+}
+
+.vote-cast .vote-btn-icon {
+    filter: none;
+}
+
+.post-vote-btn {
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    margin: -5px;
+    font-size: 25px;
+    line-height: 40px;
+    display: flex;
+    justify-content: center;
+    border-radius: 100%;
+    background-color: transparent;
+    border: none;
+}
+
+.post-vote-btn:hover {
+    transition: .1s;
+    box-shadow: 0px 2px 5px lightgray;
+}
+
+.vote-good:hover {
+    background-color: rgb(167, 236, 186);
+}
+
+.vote-bad:hover {
+    background-color: rgb(255, 200, 186);
 }
 
 .dropdown-menu{
