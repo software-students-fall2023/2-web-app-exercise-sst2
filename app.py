@@ -13,6 +13,7 @@ app.secret_key = 'your_secret_key_here'
 
 usersCollection = db['users']
 postsCollection = db['posts']
+commentsCollection = db['comments']
 
 @app.route('/')
 def home():
@@ -75,13 +76,9 @@ def logOut():
     flash("You have successfully logged out!")
     return redirect(url_for('home'))
 
-# @app.route('/feed', methods=['GET'])
-# def feed():
-#     return render_template('feed.html')
-
-FEED_NUM_POSTS = 20
 @app.route('/feed-posts', methods=['GET'])
 def getFeedPosts():
+    FEED_NUM_POSTS = 20
     feed_posts = list(postsCollection.find({}).limit(FEED_NUM_POSTS))
     for post in feed_posts:
         vote = 0
@@ -127,11 +124,43 @@ def votePost(post_id, vote):
 
 @app.route('/post/<post_id>')
 def postPage(post_id):
-    title = postsCollection.find_one({"_id":ObjectId(post_id)})['title']
-    content = postsCollection.find_one({"_id":ObjectId(post_id)})['content']
-    data = postsCollection.find_one({"_id":ObjectId(post_id)})['comments']
-    user = postsCollection.find_one({"_id":ObjectId(post_id)})['user']
-    return render_template("postPage.html", title = title, postContent = content, comments = data, user = user, currentUser = session['username'])
+    post = postsCollection.find_one({"_id":ObjectId(post_id)})
+    title = post['title']
+    content = post['content']
+    user = post['user']
+    comment_ids = post.get("comments", [])    
+    data = commentsCollection.find({"_id": {"$in": comment_ids}})
+    return render_template("postPage.html", title = title, postContent = content, comments = data, user = user, currentUser = session['username'], username=session['username'], post_id = post_id)
+
+@app.route('/profile/<profile_id>')
+def profilePage(profile_id):
+    return render_template("profile.html", username=session['username'])
+
+@app.route('/submit', methods=['POST'])
+def submit():
+    user_input = request.form.get('user_input')
+    post_id = request.form.get('post_id')
+    username = session['username']
+    if user_input:
+        inserted_id = commentsCollection.insert_one({'text': user_input, 'user': username}).inserted_id
+        postsCollection.update_one({"_id":ObjectId(post_id)}, {"$push": {"comments": inserted_id}})
+        usersCollection.update_one({"username":username}, {"$push": {"comments": inserted_id}})
+        return redirect('/')
+    
+@app.route('/create')
+def create():
+    return render_template("createPost.html")
+
+@app.route('/create', methods = ['POST'])
+def createPost():
+    username = session['username']
+    user_input = request.form.get('user_input')
+    title = request.form.get('title')
+    if user_input:
+        inserted_id = postsCollection.insert_one({'title': title, 'content': user_input, 'comments':[], 'user': username}).inserted_id
+        usersCollection.update_one({"username": username}, {"$push": {"posts":inserted_id}})
+        return redirect("/")
+
 
 if __name__ == "__main__":
     app.run(debug=True)

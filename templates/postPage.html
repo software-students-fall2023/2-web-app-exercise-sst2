@@ -10,9 +10,7 @@
     <title>Post with Comments</title>
   </head>
   <body>
-    {% with currentUser=currentUser %}
-      {% include 'nav.html' %}
-    {% endwith %}
+    {% with currentUser=currentUser %} {% include 'nav.html' %} {% endwith %}
     <div class="post">
       <h1 class="post-title">{{ title }}</h1>
       <h2 class="user">{{user}}</h2>
@@ -28,9 +26,14 @@
             >{{ comment.user }}</a
           >
         </h2>
-        <p class="comment">{{ comment.comment }}</p>
+        <p class="comment">{{ comment.text }}</p>
       </div>
       {% endfor %}
     </div>
+    <form action="/submit" method="post">
+      <input type="text" name="user_input" placeholder="Type something..." />
+      <input type="hidden" name="post_id" value="{{ post_id }}" />
+      <button type="submit">Submit</button>
+    </form>
   </body>
 </html>

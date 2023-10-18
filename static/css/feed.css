@@ -186,6 +186,10 @@ header {
 .post-score {
     color: gray;
 }
+#header-profile{
+    text-decoration: none;
+    color: inherit;
+}
 
 .vote-btn-icon {
     filter: saturate(0) brightness(.88);
