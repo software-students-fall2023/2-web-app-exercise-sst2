@@ -9,6 +9,7 @@
     />
   </head>
   <body>
+    {% include 'nav.html' %}
     <div>
       <div>
         <h1>Username</h1>
@@ -16,11 +17,11 @@
       </div>
       <div>
         <div>
-          <h1>Posts</h1>
+          <a href="/profile/{{profile_name}}/posts">Posts</a>
           <h>post stuff</h>
         </div>
         <div>
-          <h1>Comments</h1>
+          <a href="/profile/{{profile_name}}/comments">Comments</a>
           <h>Comment Stuff</h>
         </div>
       </div>

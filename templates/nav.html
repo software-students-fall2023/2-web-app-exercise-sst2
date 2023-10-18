@@ -20,7 +20,7 @@
       <div id="header-profile">
         <span id="profile-username">{{ username }}</span>
         <div class="dropdown-menu">
-          <a href="{{ url_for('logOut') }}">Profile</a>
+          <a href="/profile/{{username}}/comments">Profile</a>
           <a href="{{ url_for('logOut') }}">Log out</a>
         </div>
       </div>
