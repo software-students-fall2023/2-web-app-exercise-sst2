@@ -127,7 +127,6 @@ def votePost(post_id, vote):
 
 @app.route('/post/<post_id>')
 def postPage(post_id):
-    print(post_id)
     post = postsCollection.find_one({"_id":ObjectId(post_id)})
 
     title = post['title']
@@ -171,6 +170,7 @@ def createPost():
     username = session['username']
     user_input = request.form.get('postContent')
     title = request.form.get('title')
+
     if user_input and title:
         try:
             inserted_id = postsCollection.insert_one({'title': title, 'content': user_input, 'comments':[], 'user': username}).inserted_id
@@ -181,7 +181,21 @@ def createPost():
             return redirect(url_for('create'))
     else:
         return redirect(url_for('create'))
+    
+@app.route('/deletepost', methods = ['POST'])
+def deletePost():
+    post_id = request.form.get('post_id')
+    comment_ids = postsCollection.find_one({'_id': ObjectId(post_id)})['comments']
+    user = postsCollection.find_one({'_id': ObjectId(post_id)})['user']
+    postsCollection.delete_one({"_id": ObjectId(post_id)}) 
+    usersCollection.update_one({'username':user}, {'$pull' : {"posts": ObjectId(post_id)}}) 
+    commentsCollection.delete_many({"_id":{"$in":comment_ids}})
+    updateUsers = usersCollection.find({"comments":{"$in":comment_ids}})
 
+    for user in updateUsers:
+        user["comments"] = [comment_id for comment_id in user["comments"] if comment_id not in comment_ids]
+        usersCollection.update_one({"username": user["username"]}, {"$set": {"comments": user["comments"]}})
+    return redirect('/')
 
 
 if __name__ == "__main__":

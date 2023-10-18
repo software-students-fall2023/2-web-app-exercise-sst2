@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Lore Feed</title>
+    <script src="{{ url_for('static', filename='js/feed.js') }}" async></script>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/feed.css') }}"
+    />
+  </head>
+  <body>
+    <div>
+      <form action="/deletepost" method="post">
+        <input type="hidden" name="post_id" value="{{ post_id }}" />
+        <button type="submit">Delete Post</button>
+      </form>
+    </div>
+  </body>
+</html>
