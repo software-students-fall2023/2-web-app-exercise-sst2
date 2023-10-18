@@ -2,67 +2,7 @@
 
 body {
     margin: 0;
-    font-family: 'Inter';
-}
-
-header {
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    padding: 5px 50px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 50px;
-    border-bottom: 2px solid lightgray;
-    background-color: white;
-}
-
-#logo-btn,
-#header-profile {
-    width: 160px;
-}
-
-#logo-btn {
-    margin: 10px 0;
-    text-decoration: none;
-}
-
-#logo-text {
-    font-size: 25px;
-    color: black;
-    font-weight: bold;
-    text-align: center;
-}
-
-#dummy-search {
-    flex-grow: 1;
-    height: 40px;
-    max-width: 700px;
-    box-sizing: border-box;
-    line-height: 30px;
-    padding: 5px 10px;
-    color: gray;
-    background-color: white;
-    border: 1px solid lightgray;
-    border-radius: 1000px;
-    box-shadow: 0 2px 5px rgba(128, 128, 128, 0.5);
-}
-
-#header-profile {
-    position: relative;
-    display: flex;
-    justify-content: right;
-    align-items: center;
-    padding: 5px 10px;
-}
-
-#profile-username {
-    font-size: 16px;
-    font-weight: bold;
-    border: 2px solid gray;
-    border-radius: 1000px;
-    padding: 5px 10px;
+    font-family: 'Inter', sans-serif;
 }
 
 #content-div {
@@ -186,10 +126,6 @@ header {
 .post-score {
     color: gray;
 }
-#header-profile{
-    text-decoration: none;
-    color: inherit;
-}
 
 .vote-btn-icon {
     filter: saturate(0) brightness(.88);
@@ -225,39 +161,4 @@ header {
 
 .vote-bad:hover {
     background-color: rgb(255, 200, 186);
-}
-
-.dropdown-menu{
-    display: none;
-    position: absolute;
-    right: auto;
-    top: 100%;
-    background-color: white;
-    border: 2px solid grey;
-    border-radius: 15px;
-    z-index: 10;
-}
-
-.dropdown-menu a{
-    display: block;
-    padding: 10px;
-    text-decoration: none;
-    color: black;
-    border-radius: 12px;
-}
-
-.dropdown-menu a:hover{
-    background-color: #4DD091;
-    border-radius: 12px;
-}
-
-#header-profile:hover .dropdown-menu{
-    display:block;
-}
-
-.dropdown-menu a:first-child {
-    border-top: none;
-}
-.dropdown-menu a:not(:first-child) {
-    margin-top: 1px;
 }
