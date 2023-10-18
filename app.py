@@ -82,7 +82,18 @@ def logOut():
 FEED_NUM_POSTS = 20
 @app.route('/feed-posts', methods=['GET'])
 def getFeedPosts():
-    return dumps(list(postsCollection.find({}).limit(FEED_NUM_POSTS)))
+    feed_posts = list(postsCollection.find({}).limit(FEED_NUM_POSTS))
+    for post in feed_posts:
+        vote = 0
+        if 'userId' in session and 'votes' in post:
+            for v in post['votes']:
+                if v['userId'] == session['userId']:
+                    vote = v['vote']
+                    break
+        if 'votes' in post:
+            del post['votes']
+        post['vote'] = vote
+    return dumps(feed_posts)
 
 @app.route('/vote_post/<post_id>/<good>', methods=['POST'])
 def votePost(post_id, good):

@@ -183,12 +183,16 @@ header {
     gap: 5px;
 }
 
-.post-rating {
+.post-score {
     color: gray;
 }
 
 .vote-btn-icon {
-    filter: saturate(0) brightness(.85);
+    filter: saturate(0) brightness(.88);
+}
+
+.vote-cast .vote-btn-icon {
+    filter: none;
 }
 
 .post-vote-btn {
