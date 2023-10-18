@@ -2,13 +2,14 @@
 
 body {
     margin: 0;
-    font-family: 'Inter';
+    font-family: 'Inter', sans-serif !important;
+    min-width: 700px;
 }
 
 header {
     position: sticky;
     top: 0;
-    /* z-index: 1000; */
+    z-index: 1000;
     padding: 5px 50px;
     display: flex;
     justify-content: space-between;
@@ -16,11 +17,6 @@ header {
     gap: 50px;
     border-bottom: 2px solid lightgray;
     background-color: white;
-}
-
-#logo-btn,
-#header-profile {
-    width: 160px;
 }
 
 #logo-btn {
@@ -49,15 +45,24 @@ header {
     box-shadow: 0 2px 5px rgba(128, 128, 128, 0.5);
 }
 
+#header-right {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+}
+
 #header-profile {
     position: relative;
     display: flex;
     justify-content: right;
     align-items: center;
-    padding: 5px 10px;
+    padding: 5px 0;
 }
 
-#profile-username {
+#header-create-btn,
+#header-profile-username {
     font-size: 16px;
     font-weight: bold;
     border: 2px solid gray;
@@ -65,106 +70,9 @@ header {
     padding: 5px 10px;
 }
 
-#content-div {
-    width: 100%;
-    max-width: 1300px;
-    margin: auto;
-    margin-top: 25px;
-    padding: 0 50px;
-    box-sizing: border-box;
-    display: flex;
-    justify-content: center;
-    gap: 50px;
-}
-
-#sidebar-div {
-    width: 300px;
-    height: 600px;
-    background-color: lightgray;
-    position: sticky;
-    top: 90px;
-}
-
-#posts-list-div {
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.post-sep {
-    width: 500px;
-    margin: 7px;
-    box-sizing: border-box;
-    padding: 0 100px;
-    border: none;
-    border-bottom: 1px solid lightgray;
-}
-
-.post-item {
+#header-create-btn {
     text-decoration: none;
-    width: 500px;
-    padding: 25px 25px;
-    background-color: white;
-    border-radius: 12px;
-}
-
-.post-item:hover {
-    background-color: rgb(245, 245, 245);
-}
-
-.post-top {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.post-title {
-    margin: 0;
-    font-size: 23px;
-    font-weight: bold;
     color: black;
-}
-
-.post-author {
-    text-decoration: none;
-    font-size: 14px;
-    color: darkgray;
-}
-
-.post-author-name {
-    color: gray;
-}
-
-.post-author:hover {
-    text-decoration: underline;
-    color: rgb(70, 150, 190);
-}
-
-.post-author:hover .post-author-name {
-    color: inherit;
-}
-
-.post-content {
-    font-size: 16px;
-    color: rgb(75, 75, 75);
-    margin: 17px 0 10px 0;
-}
-
-.post-bottom {
-    display: flex;
-    justify-content: right;
-    align-items: center;
-    gap: 10px;
-}
-
-.post-comment-count {
-    font-size: 16px;
-    color: gray;
-}
-#header-profile{
-    text-decoration: none;
-    color: inherit;
 }
 
 .dropdown-menu{
@@ -176,6 +84,7 @@ header {
     border: 2px solid grey;
     border-radius: 15px;
     z-index: 10;
+    text-wrap: nowrap;
 }
 
 .dropdown-menu a{

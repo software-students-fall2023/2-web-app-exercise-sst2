@@ -92,6 +92,7 @@ def getFeedPosts():
         if 'votes' in post:
             del post['votes']
         post['vote'] = vote
+    feed_posts.sort(key=lambda p: p['_id'].generation_time, reverse=True)
     return dumps(feed_posts)
 
 @app.route('/vote_post/<post_id>/<vote>', methods=['POST'])
@@ -162,30 +163,40 @@ def submit():
     
 @app.route('/create')
 def create():
-    return render_template("createPost.html")
+    return render_template("createPost.html", username = session['username'])
 
 @app.route('/create', methods = ['POST'])
 def createPost():
     username = session['username']
-    user_input = request.form.get('user_input')
+    user_input = request.form.get('postContent')
     title = request.form.get('title')
-    if user_input:
-        inserted_id = postsCollection.insert_one({'title': title, 'content': user_input, 'comments':[], 'user': username}).inserted_id
-        usersCollection.update_one({"username": username}, {"$push": {"posts":inserted_id}})
-        return redirect("/")
+
+    if user_input and title:
+        try:
+            inserted_id = postsCollection.insert_one({'title': title, 'content': user_input, 'comments':[], 'user': username}).inserted_id
+            usersCollection.update_one({"username": username}, {"$push": {"posts":inserted_id}})
+            return redirect("/")
+        except:
+            flash("An error occurred while creating the post. Please try again.")
+            return redirect(url_for('create'))
+    else:
+        return redirect(url_for('create'))
     
 @app.route('/deletepost', methods = ['POST'])
 def deletePost():
     post_id = request.form.get('post_id')
     comment_ids = postsCollection.find_one({'_id': ObjectId(post_id)})['comments']
     user = postsCollection.find_one({'_id': ObjectId(post_id)})['user']
-    #postsCollection.delete_one({"_id": ObjectId(post_id)}) #Delete post from post collection
-    #usersCollection.update_one({'username':user}, {'$pull' : {"posts": post_id}}) #Delete post from user post array
-    #commentsCollection.delete_many({"_id":{"$in":comment_ids}}) #Delete all comments from comment collection
+    postsCollection.delete_one({"_id": ObjectId(post_id)}) 
+    usersCollection.update_one({'username':user}, {'$pull' : {"posts": ObjectId(post_id)}}) 
+    commentsCollection.delete_many({"_id":{"$in":comment_ids}})
     updateUsers = usersCollection.find({"comments":{"$in":comment_ids}})
+
     for user in updateUsers:
-        print(user)
-    return "hello"
+        user["comments"] = [comment_id for comment_id in user["comments"] if comment_id not in comment_ids]
+        usersCollection.update_one({"username": user["username"]}, {"$set": {"comments": user["comments"]}})
+    return redirect('/')
+
 
 if __name__ == "__main__":
     app.run(debug=True)

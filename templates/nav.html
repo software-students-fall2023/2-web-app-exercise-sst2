@@ -14,12 +14,14 @@
         <span id="logo-text">Lore App 🤷🏻‍♂️</span>
       </a>
       <div id="dummy-search">dummy search bar</div>
-      <a href="/create"> click </a>
-      <div id="header-profile">
-        <span id="profile-username">{{ username }}</span>
-        <div class="dropdown-menu">
-          <a href="/profile/{{username}}/comments">Profile</a>
-          <a href="{{ url_for('logOut') }}">Log out</a>
+      <div id="header-right">
+        <a href="/create" id="header-create-btn"> Post! </a>
+        <div id="header-profile">
+          <span id="header-profile-username">{{ username }}</span>
+          <div class="dropdown-menu">
+            <a href="/profile/{{username}}/comments">Profile</a>
+            <a href="{{ url_for('logOut') }}">Log out</a>
+          </div>
         </div>
       </div>
     </header>

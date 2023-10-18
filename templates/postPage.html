@@ -10,6 +10,7 @@
     <title>Post with Comments</title>
   </head>
   <body>
+    
     {% with currentUser=currentUser %} {% include 'nav.html' %} {% endwith %} {%
     include 'post.html' %} {% include 'delete.html' %}
 
@@ -18,7 +19,7 @@
       {% for comment in comments %} {% include 'comment.html' %} {% endfor %}
     </div>
     <form action="/submit" method="post">
-      <input type="text" name="user_input" placeholder="Type something..." />
+      <input type="text" name="user_input" placeholder="Share your lore..." />
       <input type="hidden" name="post_id" value="{{ post_id }}" />
       <button type="submit">Submit</button>
     </form>
