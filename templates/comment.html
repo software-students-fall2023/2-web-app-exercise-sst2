@@ -16,5 +16,7 @@
       >
     </h2>
     <p class="comment">{{ comment.text }}</p>
+    {% with type = "Comment", comment_id = comment._id, route = "comment" %} {%
+    include 'delete.html' %} {% endwith %}
   </div>
 </html>

@@ -15,5 +15,7 @@
       <h2 class="user">{{post.user}}</h2>
     </a>
     <p class="post-content">{{post.content}}</p>
+    {% with type = "Post", route = "post" %} {% include 'delete.html' %} {%
+    endwith %}
   </div>
 </html>

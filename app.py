@@ -197,6 +197,16 @@ def deletePost():
         usersCollection.update_one({"username": user["username"]}, {"$set": {"comments": user["comments"]}})
     return redirect('/')
 
+@app.route('/deletecomment', methods = ['POST'])
+def deleteComment():
+    comment_id = request.form.get('comment_id')
+    post_id = request.form.get('post_id')
+    user = commentsCollection.find_one({'_id': ObjectId(comment_id)})['user']
+
+    postsCollection.update_one({'_id':ObjectId(post_id)}, {'$pull' : {"comments": ObjectId(comment_id)}}) 
+    commentsCollection.delete_one({"_id": ObjectId(comment_id)}) 
+    usersCollection.update_one({'username':user}, {'$pull' : {"comments": ObjectId(comment_id)}}) 
+    return redirect('/')
 
 if __name__ == "__main__":
     app.run(debug=True)
