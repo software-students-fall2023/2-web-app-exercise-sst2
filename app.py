@@ -130,7 +130,7 @@ def postPage(post_id):
     user = post['user']
     comment_ids = post.get("comments", [])    
     data = commentsCollection.find({"_id": {"$in": comment_ids}})
-    return render_template("postPage.html", title = title, postContent = content, comments = data, user = user, currentUser = session['username'], username=session['username'], post_id = post_id)
+    return render_template("postPage.html", title = title, postContent = content, comments = data, user = user, username=session['username'], post_id = post_id)
 
 @app.route('/profile/<profile_id>')
 def profilePage(profile_id):
@@ -149,17 +149,24 @@ def submit():
     
 @app.route('/create')
 def create():
-    return render_template("createPost.html")
+    return render_template("createPost.html", username = session['username'])
 
 @app.route('/create', methods = ['POST'])
 def createPost():
     username = session['username']
-    user_input = request.form.get('user_input')
+    user_input = request.form.get('postContent')
     title = request.form.get('title')
-    if user_input:
-        inserted_id = postsCollection.insert_one({'title': title, 'content': user_input, 'comments':[], 'user': username}).inserted_id
-        usersCollection.update_one({"username": username}, {"$push": {"posts":inserted_id}})
-        return redirect("/")
+    if user_input and title:
+        try:
+            inserted_id = postsCollection.insert_one({'title': title, 'content': user_input, 'comments':[], 'user': username}).inserted_id
+            usersCollection.update_one({"username": username}, {"$push": {"posts":inserted_id}})
+            return redirect("/")
+        except:
+            flash("An error occurred while creating the post. Please try again.")
+            return redirect(url_for('create'))
+    else:
+        return redirect(url_for('create'))
+
 
 
 if __name__ == "__main__":
