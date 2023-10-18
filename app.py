@@ -126,7 +126,6 @@ def votePost(post_id, vote):
 
 @app.route('/post/<post_id>')
 def postPage(post_id):
-    print(post_id)
     post = postsCollection.find_one({"_id":ObjectId(post_id)})
 
     title = post['title']
@@ -174,7 +173,19 @@ def createPost():
         inserted_id = postsCollection.insert_one({'title': title, 'content': user_input, 'comments':[], 'user': username}).inserted_id
         usersCollection.update_one({"username": username}, {"$push": {"posts":inserted_id}})
         return redirect("/")
-
+    
+@app.route('/deletepost', methods = ['POST'])
+def deletePost():
+    post_id = request.form.get('post_id')
+    comment_ids = postsCollection.find_one({'_id': ObjectId(post_id)})['comments']
+    user = postsCollection.find_one({'_id': ObjectId(post_id)})['user']
+    #postsCollection.delete_one({"_id": ObjectId(post_id)}) #Delete post from post collection
+    #usersCollection.update_one({'username':user}, {'$pull' : {"posts": post_id}}) #Delete post from user post array
+    #commentsCollection.delete_many({"_id":{"$in":comment_ids}}) #Delete all comments from comment collection
+    updateUsers = usersCollection.find({"comments":{"$in":comment_ids}})
+    for user in updateUsers:
+        print(user)
+    return "hello"
 
 if __name__ == "__main__":
     app.run(debug=True)
