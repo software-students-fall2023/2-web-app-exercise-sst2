@@ -10,25 +10,13 @@
     <title>Post with Comments</title>
   </head>
   <body>
-    {% include 'nav.html' %} 
-    <div class="post">
-      <h1 class="post-title">{{ title }}</h1>
-      <h2 class="user">{{user}}</h2>
-      <p class="post-content">{{postContent}}</p>
-    </div>
+    
+    {% with currentUser=currentUser %} {% include 'nav.html' %} {% endwith %} {%
+    include 'post.html' %}
 
     <div class="comments">
       <h2 class="comments-title">Comments</h2>
-      {% for comment in comments %}
-      <div class="comment">
-        <h2 class="user">
-          <a class="profile-link" href="/profile/{{comment.user}}"
-            >{{ comment.user }}</a
-          >
-        </h2>
-        <p class="comment">{{ comment.text }}</p>
-      </div>
-      {% endfor %}
+      {% for comment in comments %} {% include 'comment.html' %} {% endfor %}
     </div>
     <form action="/submit" method="post">
       <input type="text" name="user_input" placeholder="Share your lore..." />

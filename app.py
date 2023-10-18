@@ -15,6 +15,8 @@ usersCollection = db['users']
 postsCollection = db['posts']
 commentsCollection = db['comments']
 
+# user_id = usersCollection.find({"username":session['username']})
+
 @app.route('/')
 def home():
     isLoggedIn = 'username' in session
@@ -60,7 +62,7 @@ def signUpProcess():
     if user:
         error = "This username already exists"
         return render_template('signup.html', error = error)
-    newUser = {"username":username, "password":password, "email":email, "role":userRole}
+    newUser = {"username":username, "password":password, "email":email,"comments":[], "posts":[], "role":userRole}
     try:
         usersCollection.insert_one(newUser)
         flash("Sign up successful! You can now login.")
@@ -124,17 +126,29 @@ def votePost(post_id, vote):
 
 @app.route('/post/<post_id>')
 def postPage(post_id):
+    print(post_id)
     post = postsCollection.find_one({"_id":ObjectId(post_id)})
+
     title = post['title']
     content = post['content']
     user = post['user']
     comment_ids = post.get("comments", [])    
     data = commentsCollection.find({"_id": {"$in": comment_ids}})
-    return render_template("postPage.html", title = title, postContent = content, comments = data, user = user, username=session['username'], post_id = post_id)
+    return render_template("postPage.html", title = title, postContent = content, comments = data, user = user, post = post, currentUser = session['username'], username=session['username'], post_id = post_id)
 
-@app.route('/profile/<profile_id>')
-def profilePage(profile_id):
-    return render_template("profile.html", username=session['username'])
+@app.route('/profile/<profile_name>/comments')
+def profilePageComments(profile_name):
+    print(profile_name)
+    comment_ids = usersCollection.find_one({"username":profile_name})['comments']
+    comments = commentsCollection.find({"_id": {"$in": comment_ids}})
+
+    return render_template("profileComment.html", comments = comments, profile_name = profile_name)
+
+@app.route('/profile/<profile_name>/posts')
+def profilePagePosts(profile_name):
+    post_ids = usersCollection.find_one({"username":profile_name})['posts']
+    posts = postsCollection.find({"_id": {"$in": post_ids}})
+    return render_template("profilePost.html", posts=posts, profile_name = profile_name)
 
 @app.route('/submit', methods=['POST'])
 def submit():
