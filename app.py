@@ -95,8 +95,8 @@ def getFeedPosts():
         post['vote'] = vote
     return dumps(feed_posts)
 
-@app.route('/vote_post/<post_id>/<good>', methods=['POST'])
-def votePost(post_id, good):
+@app.route('/vote_post/<post_id>/<vote>', methods=['POST'])
+def votePost(post_id, vote):
     post = postsCollection.find_one({"_id":ObjectId(post_id)})
     if post is None:
         return Response('This post may have been deleted.', 404)
@@ -104,7 +104,7 @@ def votePost(post_id, good):
         return Response('You must be logged in to vote.', 401)
     if 'votes' not in post:
         post['votes'] = []
-    vote = int(good)  # -1, 0, 1
+    vote = int(vote)  # -1, 0, 1
     old_vote = 0
     old_vote_ind = -1
     for i, v in enumerate(post['votes']):
@@ -119,7 +119,11 @@ def votePost(post_id, good):
     else:
         post['votes'].append({'userId': session['userId'], 'vote': vote})
     postsCollection.replace_one({"_id":ObjectId(post_id)}, post)
-    return Response('ok', 200)
+
+    # return copy
+    del post['votes']
+    post['vote'] = vote
+    return dumps(post)
 
 @app.route('/post/<post_id>')
 def postPage(post_id):

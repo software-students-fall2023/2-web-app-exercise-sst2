@@ -4,9 +4,6 @@ const fetchPosts = async () => {
         method: "GET"
     })
     const postList = await res.json()
-
-    console.log(postList);
-
     return postList
 }
 
@@ -17,9 +14,11 @@ const votePost = async (postEle, good) => {
     if (good && oldvote !== '1') vote = '1'
     if (!good && oldvote !== '-1') vote = '-1'
 
-    await fetch(`/vote_post/${postEle.getAttribute('p-id')}/${vote}`, {
+    const res = await fetch(`/vote_post/${postEle.getAttribute('p-id')}/${vote}`, {
         method: "POST"
     })
+    const updated = await res.json()
+    postEle.replaceWith(Post(updated))
 }
 
 const setPostVote = (postEle, vote) => {
