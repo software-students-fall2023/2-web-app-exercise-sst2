@@ -6,8 +6,12 @@ body {
 }
 
 #content-div {
+    /* position: fixed;
+    top: 65px; */
     width: 100%;
     max-width: 1300px;
+    /* height: 100vh; */
+    /* overflow-y: auto; */
     margin: auto;
     margin-top: 25px;
     padding: 0 50px;
@@ -33,7 +37,7 @@ body {
 }
 
 .post-sep {
-    width: 500px;
+    width: 650px;
     margin: 7px;
     box-sizing: border-box;
     padding: 0 100px;
@@ -54,7 +58,8 @@ body {
 .post-item {
     text-decoration: none;
     display: block;
-    width: 500px;
+    /* width: 500px; */
+    width: 650px;
     padding: 25px;
 }
 
@@ -62,6 +67,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 10px;
 }
 
 .post-title {
@@ -75,6 +81,7 @@ body {
     text-decoration: none;
     font-size: 14px;
     color: darkgray;
+    text-align: right;
 }
 
 .post-author-name {
