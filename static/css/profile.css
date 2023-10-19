@@ -1,0 +1,15 @@
+.user-header {
+    text-align: center;
+}
+
+.user-header p {
+    font-weight: bold;
+    font-size: 20px;
+    margin: 0;
+}
+
+.user-links {
+    display: flex;
+    justify-content: space-around;
+}
+

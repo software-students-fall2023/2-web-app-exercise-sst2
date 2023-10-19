@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="UTF-8" />
-    <title>Sign Up</title>
+    <title>Profile</title>
     <link
       rel="stylesheet"
       href="{{ url_for('static', filename='css/profile.css') }}"
@@ -10,20 +10,13 @@
   </head>
   <body>
     {% include 'nav.html' %}
-    <div>
-      <div>
-        <h1>Username</h1>
-        <h>{{username}}</h>
+    <div class="profile-container">
+      <div class="user-header">
+        <h1>{{username}}</h1>
       </div>
-      <div>
-        <div>
-          <a href="/profile/{{profile_name}}/posts">Posts</a>
-          <h>post stuff</h>
-        </div>
-        <div>
-          <a href="/profile/{{profile_name}}/comments">Comments</a>
-          <h>Comment Stuff</h>
-        </div>
+      <div class="user-links">
+        <a href="/profile/{{profile_name}}/comments">Comments</a>
+        <a href="/profile/{{profile_name}}/posts">Posts</a>
       </div>
     </div>
   </body>
