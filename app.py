@@ -205,5 +205,31 @@ def deleteComment():
     usersCollection.update_one({'username':user}, {'$pull' : {"comments": ObjectId(comment_id)}}) 
     return redirect('/')
 
+@app.route('/search', methods=['GET'])
+def searchPosts():
+    searchType = request.args.get('searchType')
+    searchQuery = request.args.get('searchTerm')
+    FEED_NUM_POSTS = 20
+    if searchType == "content":
+        feed_posts = list(postsCollection.find({"content": {"$regex": searchQuery, "$options" : "i"}}).limit(FEED_NUM_POSTS))
+    elif searchType == "user":
+        feed_posts = list(postsCollection.find({"user": {"$regex": searchQuery, "$options": "i"}}).limit(FEED_NUM_POSTS))
+    else:
+        return dumps([])
+    for post in feed_posts:
+        vote = 0
+        if 'userId' in session and 'votes' in post:
+            for v in post['votes']:
+                if v['userId'] == session['userId']:
+                    vote = v['vote']
+                    break
+        if 'votes' in post:
+            del post['votes']
+        post['vote'] = vote
+    feed_posts.sort(key=lambda p: p['_id'].generation_time, reverse=True)
+    return dumps(feed_posts)
+
+
+
 if __name__ == "__main__":
     app.run(debug=True)
