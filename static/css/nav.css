@@ -110,3 +110,46 @@ header {
 .dropdown-menu a:not(:first-child) {
     margin-top: 1px;
 }
+
+#search-container {
+    display: flex;
+    align-items: center;
+}
+
+#search-type {
+    margin-right: 10px;  
+    height: 40px;
+    padding: 5px;
+    border: 1px solid grey;
+    border-radius: 20px;  
+}
+
+#search-input {
+    flex-grow: 1;
+    height: 40px;
+    width: 400px;
+    max-width: 700px;
+    box-sizing: border-box;
+    line-height: 30px;
+    padding: 5px 10px;
+    color: gray;
+    background-color: white;
+    border: 1px solid grey;
+    border-radius: 20px;
+}
+
+#search-btn {
+    font-size: 16px;
+    font-weight: bold;
+    margin-left: 10px;  
+    height: 40px;
+    padding: 5px 10px;
+    background-color: #f8f8f8;  
+    border: 2px solid grey;
+    border-radius: 20px;  
+    cursor: pointer;  
+}
+
+#search-btn:hover {
+    background-color: #4DD091;
+}

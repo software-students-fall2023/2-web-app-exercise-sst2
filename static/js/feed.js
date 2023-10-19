@@ -59,6 +59,28 @@ const eleWithClass = (tag, classname) => {
   return ele;
 };
 
+const searchPosts = async (searchType, searchTerm) => {
+  const res = await fetch(`/search?searchType=${searchType}&searchTerm=${searchTerm}`, {
+    method: "GET",
+  });
+  const postList = await res.json();
+  return postList;
+};
+
+const updateFeedWithSearchResults = async (searchType, searchTerm) => {
+  const postListDiv = document.getElementById("posts-list-div");
+  postListDiv.innerHTML = '';
+
+  const postList = await searchPosts(searchType, searchTerm);
+  const postListDoc = document.createDocumentFragment();
+  for (const post of postList) {
+    postListDoc.appendChild(Post(post));
+    postListDoc.appendChild(PostSep());
+  }
+
+  postListDiv.appendChild(postListDoc);
+};
+
 // Post component
 const Post = ({ _id, title, content, comments, user, score, vote }) => {
   const postContainer = eleWithClass("div", "post-container");
@@ -172,5 +194,22 @@ if (document.readyState !== "loading") {
 } else {
   window.addEventListener("DOMContentLoaded", () => {
     postsInit();
+  });
+}
+
+function attachSearchEventListener() {
+  document.getElementById("search-container").addEventListener("submit", (e) => {
+    e.preventDefault();
+    const searchType = document.getElementById("search-type").value;
+    const searchTerm = document.getElementById("search-input").value;
+    updateFeedWithSearchResults(searchType, searchTerm);
+  });
+}
+
+if (document.readyState !== "loading") {
+  attachSearchEventListener();
+} else {
+  window.addEventListener("DOMContentLoaded", () => {
+    attachSearchEventListener();
   });
 }
