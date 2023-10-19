@@ -128,13 +128,10 @@ def votePost(post_id, vote):
 @app.route('/post/<post_id>')
 def postPage(post_id):
     post = postsCollection.find_one({"_id":ObjectId(post_id)})
-
-    title = post['title']
-    content = post['content']
     user = post['user']
     comment_ids = post.get("comments", [])    
     data = commentsCollection.find({"_id": {"$in": comment_ids}})
-    return render_template("postPage.html", title = title, postContent = content, comments = data, user = user, post = post, currentUser = session['username'], username=session['username'], post_id = post_id)
+    return render_template("postPage.html", comments = data, sessionName = session['username'], post = post, post_id = post_id)
 
 @app.route('/profile/<profile_name>/comments')
 def profilePageComments(profile_name):
