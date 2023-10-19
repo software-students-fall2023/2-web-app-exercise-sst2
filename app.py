@@ -131,11 +131,10 @@ def postPage(post_id):
     user = post['user']
     comment_ids = post.get("comments", [])    
     data = commentsCollection.find({"_id": {"$in": comment_ids}})
-    return render_template("postPage.html", comments = data, sessionName = session['username'], post = post, post_id = post_id)
+    return render_template("postPage.html", comments = data, username = session['username'], post = post, post_id = post_id)
 
 @app.route('/profile/<profile_name>/comments')
 def profilePageComments(profile_name):
-    print(profile_name)
     comment_ids = usersCollection.find_one({"username":profile_name})['comments']
     comments = commentsCollection.find({"_id": {"$in": comment_ids}})
 

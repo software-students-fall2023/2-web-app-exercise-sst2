@@ -15,7 +15,7 @@
       <h2 class="user">{{post.user}}</h2>
     </a>
     <p class="post-content">{{post.content}}</p>
-    {% if sessionName == post.user %} {% with type = "Post", route = "post" %}
-    {% include 'delete.html' %} {% endwith %} {% endif %}
+    {% if username == post.user %} {% with type = "Post", route = "post" %} {%
+    include 'delete.html' %} {% endwith %} {% endif %}
   </div>
 </html>
