@@ -139,13 +139,13 @@ def profilePageComments(profile_name):
     comment_ids = usersCollection.find_one({"username":profile_name})['comments']
     comments = commentsCollection.find({"_id": {"$in": comment_ids}})
 
-    return render_template("profileComment.html", comments = comments, profile_name = profile_name)
+    return render_template("profileComment.html", comments = comments, profile_name = profile_name, username=session['username'])
 
 @app.route('/profile/<profile_name>/posts')
 def profilePagePosts(profile_name):
     post_ids = usersCollection.find_one({"username":profile_name})['posts']
     posts = postsCollection.find({"_id": {"$in": post_ids}})
-    return render_template("profilePost.html", posts=posts, profile_name = profile_name)
+    return render_template("profilePost.html", posts=posts, profile_name = profile_name, username=session['username'])
 
 @app.route('/submit', methods=['POST'])
 def submit():
