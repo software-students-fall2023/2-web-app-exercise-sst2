@@ -14,15 +14,14 @@ app.secret_key = 'your_secret_key_here'
 usersCollection = db['users']
 postsCollection = db['posts']
 commentsCollection = db['comments']
-
-# user_id = usersCollection.find({"username":session['username']})
+reportsCollection = db['reports']
 
 @app.route('/')
 def home():
     isLoggedIn = 'username' in session
     if isLoggedIn is False:
         return render_template('home.html')
-    return render_template('feed.html', username=session['username'])  # Change this to render_template once we build the CSS HTML
+    return render_template('feed.html', username=session['username'], role = session['role'])
 
 @app.route('/login', methods=['GET'])
 def loginPage():
@@ -36,6 +35,7 @@ def loginProcess():
     if user and user['password'] == password:
         session['username'] = user['username']
         session['userId'] = str(user['_id'])
+        session['role'] = user['role']
         return redirect(url_for('home'))
     else:
         error = "Invalid password or username"
@@ -131,20 +131,20 @@ def postPage(post_id):
     user = post['user']
     comment_ids = post.get("comments", [])    
     data = commentsCollection.find({"_id": {"$in": comment_ids}})
-    return render_template("postPage.html", comments = data, username = session['username'], post = post, post_id = post_id)
+    return render_template("postPage.html", comments = data, username = session['username'], post = post, post_id = post_id, role = session['role'])
 
 @app.route('/profile/<profile_name>/comments')
 def profilePageComments(profile_name):
     comment_ids = usersCollection.find_one({"username":profile_name})['comments']
     comments = commentsCollection.find({"_id": {"$in": comment_ids}})
 
-    return render_template("profileComment.html", comments = comments, profile_name = profile_name, username=session['username'])
+    return render_template("profileComment.html", comments = comments, profile_name = profile_name, username=session['username'],role=session['role'])
 
 @app.route('/profile/<profile_name>/posts')
 def profilePagePosts(profile_name):
     post_ids = usersCollection.find_one({"username":profile_name})['posts']
     posts = postsCollection.find({"_id": {"$in": post_ids}})
-    return render_template("profilePost.html", posts=posts, profile_name = profile_name, username=session['username'])
+    return render_template("profilePost.html", posts=posts, profile_name = profile_name, username=session['username'],role=session['role'])
 
 @app.route('/submit', methods=['POST'])
 def submit():
@@ -228,6 +228,52 @@ def searchPosts():
     feed_posts.sort(key=lambda p: p['_id'].generation_time, reverse=True)
     return dumps(feed_posts)
 
+@app.route('/report', methods=['POST'])
+def reportPost():
+    post_id = request.form['post_id']
+    return redirect(url_for('reportPage', post_id=post_id))
+
+@app.route('/report/<post_id>')
+def reportPage(post_id):
+    return render_template("reportPage.html", post_id=post_id)
+
+@app.route('/submit-report', methods=['POST'])
+def submit_report():
+    post_id = request.form.get('post_id')
+    violation_type = request.form.get('violation-type')
+    additional_info = request.form.get('additional-info')
+    post = postsCollection.find_one({"_id": ObjectId(post_id)})
+    report = {"post_id": post, "violation_type": violation_type,"additional_info": additional_info, "reporting_user_id": session['userId'], "reporting_username": session['username']}
+    report_id = reportsCollection.insert_one(report).inserted_id
+    postsCollection.update_one({"_id": ObjectId(post_id)},{"$addToSet": {"reports": report_id}})
+    usersCollection.update_one({"_id": ObjectId(session['userId'])},{"$addToSet": {"reported_posts": post}})
+    return render_template('reportSuccess.html')
+
+@app.route('/reports', methods=['GET'])
+def reports():
+    if 'role' in session and session['role'] == 'moderator':
+        reports = list(reportsCollection.find().limit(20))
+        reports.sort(key=lambda p: p['_id'].generation_time, reverse=True)
+        return render_template('reports.html', reports=reports, username=session['username'], role=session['role'])
+    else:
+        redirect(url_for('home'))
+
+@app.route('/viewreport/<report_id>', methods=['GET'])
+def report_detail(report_id):
+    if 'role' in session and session['role'] == 'moderator':
+        report = reportsCollection.find_one({"_id": ObjectId(report_id)})
+        if report:
+            return render_template('reportDetail.html', report=report)
+        else:
+            return "Report not found", 404
+    else:
+        return redirect(url_for('home'))
+    
+@app.route('/deletereport', methods=['POST'])
+def deleteReport():
+    report_id = request.form.get('report_id')
+    reportsCollection.delete_one({"_id": ObjectId(report_id)})
+    return redirect('/reports')
 
 
 if __name__ == "__main__":

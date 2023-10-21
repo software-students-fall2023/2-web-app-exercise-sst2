@@ -35,6 +35,9 @@
           <span id="header-profile-username">{{ username }}</span>
           <div class="dropdown-menu">
             <a href="/profile/{{username}}/comments">Profile</a>
+            {% if role == "moderator" %}
+                <a href="/reports">Reports</a>
+            {% endif %}
             <a href="{{ url_for('logOut') }}">Log out</a>
           </div>
         </div>

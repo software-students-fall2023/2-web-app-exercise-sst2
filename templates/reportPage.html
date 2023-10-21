@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report a Violation</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/reportPage.css') }}">
+</head>
+<body>
+
+<div class="report-container">
+    <h2>Report a Violation</h2>
+    
+    <form action="/submit-report" method="post">
+        <input type="hidden" name="post_id" value="{{ post_id }}">
+        <label for="violation-type">Type of Violation:</label>
+        <select name="violation-type" id="violation-type" required>
+            <option value="" disabled selected>Select a violation type</option>
+            <option value="inappropriate_language">Inappropriate Language</option>
+            <option value="spam">Spam</option>
+            <option value="harassment">Harassment</option>
+            <option value="misinformation">Misinformation</option>
+        </select>
+        <label for="additional-info">Additional Information (optional):</label>
+        <textarea name="additional-info" id="additional-info" rows="4" placeholder="Provide more details..."></textarea>
+        <button type="submit">Submit Report</button>
+    </form>
+</div>
+
+</body>
+</html>
