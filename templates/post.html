@@ -8,6 +8,13 @@
       href="{{ url_for('static', filename='css/post.css') }}"
     />
     <title>Post with Comments</title>
+    <script>
+      const vote_post_handler = async (vote) => {
+        await fetch(`/vote_post/{{post_id}}/${vote}`, { method: 'POST' });
+        await new Promise(r => setTimeout(r, 100));
+        location.reload();
+      }
+    </script>
   </head>
   <div class="post">
     <h1 class="post-title">{{ post.title }}</h1>
@@ -17,5 +24,20 @@
     <p class="post-content">{{post.content}}</p>
     {% if username == post.user or role == 'moderator' %} {% with type = "Post", route = "post" %} {%
     include 'delete.html' %} {% endwith %} {% endif %}
+    {% if post_id %}
+    <div class="post-voting">
+      <form action="" onsubmit="vote_post_handler({{0 if vote == 1 else 1}}); return false;">
+        <button class="post-vote-btn vote-good {{'vote-cast' if vote == 1}}">
+          <span class="vote-btn-icon">👍</span>
+        </button>
+      </form>
+      <span class="post-score" style="{{'color: red;' if vote == -1}}{{'color: limegreen;' if vote == 1}}">{{post.score}}</span>
+      <form action="" onsubmit="vote_post_handler({{0 if vote == -1 else -1}}); return false;">
+        <button class="post-vote-btn vote-bad {{'vote-cast' if vote == -1}}">
+          <span class="vote-btn-icon">👎</span>
+        </button>
+      </form>
+    </div>
+    {% endif %}
   </div>
 </html>

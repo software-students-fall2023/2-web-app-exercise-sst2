@@ -131,7 +131,12 @@ def postPage(post_id):
     user = post['user']
     comment_ids = post.get("comments", [])    
     data = commentsCollection.find({"_id": {"$in": comment_ids}})
-    return render_template("postPage.html", comments = data, username = session['username'], post = post, post_id = post_id, role = session['role'])
+    vote = 0
+    for i, v in enumerate(post['votes']):
+        if v['userId'] == session['userId']:
+            vote = v['vote']
+            break
+    return render_template("postPage.html", comments = data, username = session['username'], post = post, post_id = post_id, role = session['role'], vote=vote)
 
 @app.route('/profile/<profile_name>/comments')
 def profilePageComments(profile_name):

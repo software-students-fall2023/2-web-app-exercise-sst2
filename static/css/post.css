@@ -5,6 +5,7 @@ body {
 }
 
 .post {
+    position: relative;
     background-color: #f9f9f9;
     padding: 20px;
     margin: 20px;
@@ -123,4 +124,53 @@ a:hover{
 
 #report-form button:hover {
     background-color: #af2e03; 
+}
+
+.post-voting {
+    position: absolute;
+    bottom: 15px;
+    right: 20px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.post-score {
+    color: gray;
+}
+
+.vote-btn-icon {
+    filter: saturate(0) brightness(.88);
+}
+
+.vote-cast .vote-btn-icon {
+    filter: none;
+}
+
+.post-vote-btn {
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    margin: -5px;
+    font-size: 25px;
+    line-height: 40px;
+    display: flex;
+    justify-content: center;
+    border-radius: 100%;
+    background-color: transparent;
+    border: none;
+}
+
+.post-vote-btn:hover {
+    transition: .1s;
+    box-shadow: 0px 2px 5px lightgray;
+}
+
+.vote-good:hover {
+    background-color: rgb(167, 236, 186);
+}
+
+.vote-bad:hover {
+    background-color: rgb(255, 200, 186);
 }
