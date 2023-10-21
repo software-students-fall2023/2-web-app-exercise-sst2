@@ -102,3 +102,25 @@ a:hover{
 .comment-submit button[type="submit"]:hover {
     background-color: #0056b3;
 }
+
+#report-form {
+    position: fixed; 
+    bottom: 20px;    
+    right: 20px;     
+    z-index: 1000;   
+}
+
+#report-form button {
+    font-size: 13px;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 10px;
+    background-color: red; 
+    color: white; 
+    cursor: pointer; 
+    transition: background-color 0.3s; 
+}
+
+#report-form button:hover {
+    background-color: #af2e03; 
+}

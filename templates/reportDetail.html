@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report Details</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/reportDetail.css') }}">
+</head>
+<body>
+    <h2>Report Details</h2>
+    <div class="report-detail-container">
+        <p><strong>Report ID:</strong> {{ report['_id'] }}</p>
+        <p><strong>Violation Type:</strong> {{ report['violation_type'] }}</p>
+        <p><strong>Additional Information:</strong> {{ report['additional_info'] }}</p>
+        <p><strong>Reporting User ID:</strong> {{ report['reporting_user_id'] }}</p>
+        <p><strong>Reporting Username:</strong> {{ report['reporting_username'] }}</p>
+
+        <h3>Associated Post Details:</h3>
+        <div class="post-container">
+            <p><strong>Post ID:</strong> {{ report['post_id']['_id'] }}</p>
+            <p><strong>Post ID:</strong> {{ report['post_id']['title'] }}</p>
+            <p><strong>Post Content:</strong> {{ report['post_id']['content'] }}</p>
+        </div>
+        <div class="actions">
+            <a href="{{ url_for('reports') }}" class="back-button">Back to Reports</a>
+            <form action="{{ url_for('deletePost') }}" method="post" style="display: inline;">
+                <input type="hidden" name="post_id" value="{{ report['post_id']['_id'] }}">
+                <button type="submit" class="delete-post-button">Delete Post</button>
+            </form>
+        </div>
+    </div>
+    <form action="{{ url_for('deleteReport') }}" method="post" class="delete-report-form">
+        <input type="hidden" name="report_id" value="{{ report['_id'] }}">
+        <button type="submit" class="delete-report-button">Delete Report</button>
+    </form>    
+</body>
+</html>
+

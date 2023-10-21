@@ -1,0 +1,109 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f6f6f6;
+    margin: 0;
+    padding: 0;
+}
+
+h2{
+    text-align: center;
+}
+
+h2, h3 {
+    color: #333;
+    margin-left: 20px;
+}
+
+.report-detail-container {
+    background-color: #ffffff;
+    border-radius: 10px;
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px 40px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.post-container {
+    background-color: #d1f4fd;
+    border-radius: 10px;
+    padding: 15px;
+    margin-top: 15px;
+}
+
+.report-detail-container p {
+    margin: 10px 0;
+    font-size: 16px;
+    color: #555;
+}
+
+.report-detail-container p strong {
+    font-weight: bold;
+    color: #333;
+}
+
+a {
+    display: inline-block;
+    background-color: #4DD091;
+    color: #ffffff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+a:hover {
+    background-color: #3bb87a;
+}
+
+.actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.back-button, .delete-post-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.back-button {
+    background-color: #4DD091; 
+    color: #ffffff;
+}
+
+.delete-post-button {
+    font-size: 16px;
+    background-color: #f44336; 
+    color: #ffffff;
+}
+
+.back-button:hover {
+    background-color: #3BB07A; 
+}
+
+.delete-post-button:hover {
+    background-color: #e63229; 
+}
+
+.delete-report-button {
+    position: fixed;        
+    bottom: 20px;           
+    right: 20px;            
+    padding: 10px 20px;     
+    background-color: red;  
+    color: #ffffff;         
+    border: none;           
+    border-radius: 5px;     
+    text-decoration: none;  
+    cursor: pointer;        
+    transition: 0.3s;       
+}
+
+.delete-report-button:hover {
+    background-color: #d12b2b;  
+}

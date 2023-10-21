@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reports</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/reports.css') }}">
+</head>
+<body>
+    {% include 'nav.html' %}
+    <h2>Reports</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Report ID</th>
+                <th>Violation Type</th>
+                <th>Reported By User</th>
+                <th>Details</th>
+                <th>Delete Report</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for report in reports %}
+            <tr>
+                <td>{{ report['_id'] }}</td>
+                <td>{{ report['violation_type'] }}</td>
+                <td>{{ report['reporting_username'] }}</td>
+                <td><a href="{{ url_for('report_detail', report_id=report['_id']) }}">View</a></td>
+                <td>
+                    <form action="{{ url_for('deleteReport') }}" method="post" class="delete-report-form">
+                        <input type="hidden" name="report_id" value="{{ report['_id'] }}">
+                        <button type="submit" class="delete-report-button">Delete Report</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
