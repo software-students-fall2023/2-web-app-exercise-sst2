@@ -174,7 +174,7 @@ def createPost():
 
     if user_input and title:
         try:
-            inserted_id = postsCollection.insert_one({'title': title, 'content': user_input, 'comments':[], 'user': username}).inserted_id
+            inserted_id = postsCollection.insert_one({'title': title, 'content': user_input, 'comments':[], 'user': username,'votes':[]}).inserted_id
             usersCollection.update_one({"username": username}, {"$push": {"posts":inserted_id}})
             return redirect("/")
         except:
@@ -215,7 +215,7 @@ def searchPosts():
     searchQuery = request.args.get('searchTerm')
     FEED_NUM_POSTS = 20
     if searchType == "content":
-        feed_posts = list(postsCollection.find({"content": {"$regex": searchQuery, "$options" : "i"}}).limit(FEED_NUM_POSTS))
+        feed_posts = list(postsCollection.find({"$or": [{"content": {"$regex": searchQuery, "$options" : "i"}},{"title": {"$regex": searchQuery, "$options" : "i"}}]}).limit(FEED_NUM_POSTS))
     elif searchType == "user":
         feed_posts = list(postsCollection.find({"user": {"$regex": searchQuery, "$options": "i"}}).limit(FEED_NUM_POSTS))
     else:
