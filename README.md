@@ -4,7 +4,7 @@ A little exercise to build a web application following an agile development proc
 
 ## Product vision statement
 
-A web forum centered on gaming lore, encouraging conversation and feedback to inspire gaming users in cultivating ideas and creating their own stories.
+A tag-based web forum designed to foster ideas on game-related lore and artwork, encouraging conversation and feedback to inspire gaming users in creating their own designs.
 
 ## User stories
 
@@ -33,3 +33,7 @@ To see our taskboards, click [here](https://github.com/software-students-fall202
   3. **User 2**:
      - Username: `user2`
      - Password: `password2`
+
+## Image citation
+
+Stepanpogorelov. Classic Super Mario Background. 5 Apr. 2023. Wallpapers.Com, https://wallpapers.com/background/super-mario-background-vbep44x7ca67u2vn.html. Accessed 18 Oct. 2023. 
