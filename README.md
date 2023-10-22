@@ -4,7 +4,7 @@ A little exercise to build a web application following an agile development proc
 
 ## Product vision statement
 
-A tag-based web forum designed to foster ideas on game-related lore and artwork, encouraging conversation and feedback to inspire gaming users in creating their own designs.
+A web forum centered on gaming lore, encouraging conversation and feedback to inspire gaming users in cultivating ideas and creating their own stories.
 
 ## User stories
 
