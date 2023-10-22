@@ -33,3 +33,7 @@ To see our taskboards, click [here](https://github.com/software-students-fall202
   3. **User 2**:
      - Username: `user2`
      - Password: `password2`
+
+## Image citation
+
+Stepanpogorelov. Classic Super Mario Background. 5 Apr. 2023. Wallpapers.Com, https://wallpapers.com/background/super-mario-background-vbep44x7ca67u2vn.html. Accessed 18 Oct. 2023. 
