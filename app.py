@@ -174,7 +174,7 @@ def createPost():
 
     if user_input and title:
         try:
-            inserted_id = postsCollection.insert_one({'title': title, 'content': user_input, 'comments':[], 'user': username,'votes':[]}).inserted_id
+            inserted_id = postsCollection.insert_one({'title': title, 'content': user_input, 'comments':[], 'user': username,'votes':[], 'score': 0}).inserted_id
             usersCollection.update_one({"username": username}, {"$push": {"posts":inserted_id}})
             return redirect("/")
         except:
