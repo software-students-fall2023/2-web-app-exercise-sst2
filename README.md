@@ -33,3 +33,5 @@ To see our taskboards, click [here](https://github.com/software-students-fall202
   3. **User 2**:
      - Username: `user2`
      - Password: `password2`
+
+Other than that, just pull the code from the repository and run App.py using and IDE and it should work.
